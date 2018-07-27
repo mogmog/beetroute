@@ -287,6 +287,15 @@ export default class HeadlineCreator extends Component {
           />
 
         </div>
+
+        <ul>
+          <li>@H - graph </li>
+          <li>@D - definition</li>
+          <li>@G</li>
+          <li>^</li>
+          <li>@R</li>
+        </ul>
+
       </div>
     )
   }
