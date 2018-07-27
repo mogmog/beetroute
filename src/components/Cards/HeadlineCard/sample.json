@@ -1,0 +1,200 @@
+{
+
+  "items": [
+    {
+      "headline": "Global headline about this weeks stuff",
+      "raw" :
+
+      {
+        "blocks": [
+          {
+            "key": "f1vjo",
+            "text": "Ipso facto is a Latin phrase, directly translated as \"by the fact itself\",[1] which means that a specific phenomenon is a direct consequence, a resultant effect, of the action in question, instead of being brought about by a previous action. It is a term of art used in philosophy, law, and science. An example in law is money laundering: the act is not ipso facto illegal because it is an exchange but is done as a cover for something else, so the act puts the actions of an individual in question. A common English idiom with a similar meaning is \"in and of itself\". Compare also \"by itself\" and \"per se\".",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [
+              {
+                "offset": 0,
+                "length": 10,
+                "style": "BOLD"
+              },
+              {
+                "offset": 0,
+                "length": 10,
+                "style": "ITALIC"
+              },
+              {
+                "offset": 122,
+                "length": 6,
+                "style": "ITALIC"
+              },
+              {
+                "offset": 154,
+                "length": 6,
+                "style": "ITALIC"
+              },
+              {
+                "offset": 354,
+                "length": 10,
+                "style": "ITALIC"
+              }
+            ],
+            "entityRanges": [
+              {
+                "offset": 16,
+                "length": 5,
+                "key": 0
+              },
+              {
+                "offset": 74,
+                "length": 3,
+                "key": 1
+              },
+              {
+                "offset": 250,
+                "length": 11,
+                "key": 2
+              },
+              {
+                "offset": 270,
+                "length": 10,
+                "key": 3
+              },
+              {
+                "offset": 282,
+                "length": 3,
+                "key": 4
+              },
+              {
+                "offset": 291,
+                "length": 7,
+                "key": 5
+              },
+              {
+                "offset": 321,
+                "length": 16,
+                "key": 6
+              },
+              {
+                "offset": 517,
+                "length": 5,
+                "key": 7
+              },
+              {
+                "offset": 550,
+                "length": 16,
+                "key": 8
+              },
+              {
+                "offset": 599,
+                "length": 6,
+                "key": 9
+              }
+            ],
+            "data": {}
+          },
+          {
+            "key": "b15c2",
+            "text": "This is the text.",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {}
+          }
+        ],
+        "entityMap": {
+          "0": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+              "href": "https://en.wikipedia.org/wiki/Latin",
+              "title": "Latin",
+              "url": "https://en.wikipedia.org/wiki/Latin"
+            }
+          },
+          "1": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+              "href": "https://en.wikipedia.org/wiki/Ipso_facto#cite_note-1",
+              "url": "https://en.wikipedia.org/wiki/Ipso_facto#cite_note-1"
+            }
+          },
+          "2": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+              "href": "https://en.wikipedia.org/wiki/Term_of_art",
+              "title": "Term of art",
+              "url": "https://en.wikipedia.org/wiki/Term_of_art"
+            }
+          },
+          "3": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+              "href": "https://en.wikipedia.org/wiki/Philosophy",
+              "title": "Philosophy",
+              "url": "https://en.wikipedia.org/wiki/Philosophy"
+            }
+          },
+          "4": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+              "href": "https://en.wikipedia.org/wiki/Law",
+              "title": "Law",
+              "url": "https://en.wikipedia.org/wiki/Law"
+            }
+          },
+          "5": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+              "href": "https://en.wikipedia.org/wiki/Science",
+              "title": "Science",
+              "url": "https://en.wikipedia.org/wiki/Science"
+            }
+          },
+          "6": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+              "href": "https://en.wikipedia.org/wiki/Money_laundering",
+              "title": "Money laundering",
+              "url": "https://en.wikipedia.org/wiki/Money_laundering"
+            }
+          },
+          "7": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+              "href": "https://en.wikipedia.org/wiki/Idiom",
+              "title": "Idiom",
+              "url": "https://en.wikipedia.org/wiki/Idiom"
+            }
+          },
+          "8": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+              "href": "https://en.wiktionary.org/wiki/in_and_of_itself#Adverb",
+              "title": "wikt:in and of itself",
+              "url": "https://en.wiktionary.org/wiki/in_and_of_itself#Adverb"
+            }
+          },
+          "9": {
+            "type": "LINK",
+            "mutability": "MUTABLE",
+            "data": {
+              "href": "https://en.wiktionary.org/wiki/per_se#Adverb",
+              "title": "wikt:per se",
+              "url": "https://en.wiktionary.org/wiki/per_se#Adverb"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+@color_1: #292f33;
+@color_2: #8899a6;
+@color_3: #2FC2EF;
+@color_4: #ccd6dd;
+@color_5: #66757f;
+@color_6: #fff;
+@color_7: inherit;
+@color_8: #55ACEE;
+@font_family_1: Arial, Helvetica, sans-serif;
+@background_color_1: #E5F2F7;
+@background_color_2: #f5f8fa;
+@background_color_3: #55acee;
+
+.twitter {
+
+  :global {
+
+    .modal {
+    background-color: white;
+      height : 200px;
+    }
+
+    .modal-footer {
+      background-color: @background_color_1;
+    }
+    .modal-header {
+      padding: 30px 40px;
+      padding-bottom: 0px;
+      border-bottom: 0;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    .permalink-header {
+      height: 48px;
+      margin-bottom: 15px;
+      float: left;
+      .fullname {
+        display: block;
+        padding-top: 2px;
+        margin-top: 3px;
+        font-size: 18px;
+        line-height: 1.25;
+      }
+      .username {
+        font-size: 14px;
+      }
+    }
+    .avatar {
+      float: left;
+      margin-right: 10px;
+      width: 48px;
+      height: 48px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      -moz-force-broken-image-icon: 1;
+    }
+    .name-block {
+      float: left;
+    }
+    .fullname {
+      font-weight: bold;
+      color: @color_1;
+    }
+    .username {
+      direction: ltr;
+      unicode-bidi: embed;
+      color: @color_2;
+    }
+    s {
+      text-decoration: none;
+    }
+    b {
+      font-weight: normal;
+    }
+    .modal-body {
+      padding: 30px 40px;
+      padding-top: 0px;
+      .tweet-text.max {
+        font-size: 28px;
+        font-family: @font_family_1;
+        line-height: 34px;
+        font-weight: 300;
+        letter-spacing: .01em;
+      }
+      .tweet-text {
+        font-size: 14px;
+        line-height: 18px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        .link {
+          color: @color_3;
+        }
+      }
+    }
+    .tweet-action {
+      float: left;
+      margin-right: 31px;
+      span {
+        color: @color_4;
+        display: inline-block;
+        font-size: 24px !important;
+        line-height: 1;
+        position: relative;
+        top: 4px;
+        padding: 0 2px;
+      }
+    }
+    .tweet-actionList {
+      margin-top: 5px;
+      height: 21px;
+    }
+    .Icon {
+      background: transparent;
+      display: inline-block;
+      font-style: normal;
+      vertical-align: baseline;
+      &:before {
+        display: block;
+        font-weight: normal;
+        font-style: normal;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+      }
+    }
+    .Icon--reply {
+      &:before {
+        content: "\f151";
+      }
+    }
+    .Icon--retweet {
+      &:before {
+        content: "\f152";
+      }
+    }
+    .Icon--favorite {
+      &:before {
+        content: "\f147";
+      }
+    }
+    .Icon--dots {
+      &:before {
+        content: "\f150";
+      }
+    }
+    .Icon--follow {
+      &:before {
+        content: "\f175";
+      }
+    }
+    .Icon--cog {
+      &:before {
+        content: "\f059";
+      }
+    }
+    .Icon--medium {
+      font-size: 18px;
+      line-height: 18px;
+      margin: 0px 8px 0px 3px;
+      display: inline-block;
+      top: 5px;
+      position: relative;
+      color: @color_5;
+    }
+    .client-and-actions {
+      clear: both;
+      margin-top: 10px;
+      .metadata {
+        line-height: 24px;
+        font-size: 13px;
+        color: @color_2;
+      }
+    }
+    .follow-button {
+      .button-text {
+        min-width: 73px;
+        padding: 0px;
+      }
+    }
+    .follow-text {
+      color: @color_1;
+    }
+    .button-text {
+      background-repeat: no-repeat;
+      border: 1px solid #e1e8ed;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: normal;
+      background-color: @background_color_2;
+      background-image: linear-gradient(#fff,#f5f8fa);
+      .Icon {
+        color: @color_7;
+        font-size: 18px;
+        line-height: 17px;
+        padding-right: 3px;
+        color: @color_8;
+      }
+    }
+    .fol {
+      color: @color_6;
+      background-color: @background_color_3;
+      background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.05));
+      -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#00000000, endColorstr=#0C000000)";
+      border: 1px solid #3b88c3;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+      &:hover {
+        color: @color_6;
+      }
+    }
+
+
+  }
+}

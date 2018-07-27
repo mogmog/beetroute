@@ -1,0 +1,23 @@
+{"socialmedia":[
+  {"country": "Instagram", "year": "1750", "value": 300},
+  {"country": "Instagram", "year": "1800", "value": 350},
+  {"country": "Instagram", "year": "1850", "value": 450},
+  {"country": "Instagram", "year": "1900", "value": 550},
+  {"country": "Instagram", "year": "1950", "value": 660},
+  {"country": "Instagram", "year": "1999", "value": 1000},
+  {"country": "Instagram", "year": "2050", "value": 1200},
+  {"country": "Facebook", "year": "1750", "value": 106},
+  {"country": "Facebook", "year": "1800", "value": 107},
+  {"country": "Facebook", "year": "1850", "value": 111},
+  {"country": "Facebook", "year": "1900", "value": 133},
+  {"country": "Facebook", "year": "1950", "value": 221},
+  {"country": "Facebook", "year": "1999", "value": 767},
+  {"country": "Facebook", "year": "2050", "value": 1766},
+  {"country": "Twitter", "year": "1750", "value": 500},
+  {"country": "Twitter", "year": "1800", "value": 400},
+  {"country": "Twitter", "year": "1850", "value": 300},
+  {"country": "Twitter", "year": "1900", "value": 200},
+  {"country": "Twitter", "year": "1950", "value": 100},
+  {"country": "Twitter", "year": "1999", "value": 50},
+  {"country": "Twitter", "year": "2050", "value": 25}
+]}

@@ -1,0 +1,124 @@
+@import '~antd/lib/style/themes/default.less';
+@import '../../utils/utils.less';
+
+
+
+.flexboxlayout {
+
+  :global {
+
+    .wrapper {
+      position: relative;
+      float: left;
+      margin: 0 5px 0 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+    }
+
+    .rounded {
+      border-radius: 5px;
+    }
+
+    .bordered {
+      border : 1px solid #4a85bb;
+      margin:10px;
+    }
+
+    .flexcanvas {
+      width: 100%;
+      height: 100vh !important;
+    }
+
+
+    .rowParent, .columnParent {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-direction: normal;
+      -webkit-box-orient: horizontal;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-box-pack: start;
+      -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+      justify-content: flex-start;
+      -webkit-align-content: stretch;
+      -ms-flex-line-pack: stretch;
+      align-content: stretch;
+      -webkit-box-align: stretch;
+      -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+      align-items: stretch;
+    }
+
+    .columnParent {
+      -webkit-box-orient: vertical;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    }
+
+    .flexChild {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      -webkit-align-self: auto;
+      -ms-flex-item-align: auto;
+      align-self: auto;
+    }
+
+    #rowChild14954 {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 700px;
+    }
+
+    #rowChild763434 {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 400px;
+    }
+
+
+    #rowChild12611 {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+      width: 500px;
+    }
+
+    #rowChild19929 {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+    }
+
+    #columnChild82623 {
+      -webkit-box-flex: 0;
+      -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
+      height: 50px;
+    }
+  }
+
+}

@@ -1,0 +1,53 @@
+@import '~antd/lib/style/themes/default.less';
+
+.trendItem {
+  font-size: @font-size-base * 2.5;
+  word-wrap:normal;
+
+  .up,
+  .down {
+    position: relative;
+    top: -2px;
+    left : 2px;
+    i {
+      font-size: 12px;
+      transform: scale(2.3)translate(2px, -4px);
+    }
+  }
+  .up {
+    color: @red-6;
+  }
+  .down {
+    color: @green-6;
+  }
+
+  &.trendItemGrey .up,
+  &.trendItemGrey .down {
+    color: @text-color;
+  }
+
+  .label {
+    display:inline-block;
+    font-size: @font-size-base * 1.0;
+    transform: translate(0px, -20px);
+  }
+
+  .sublabel {
+    display:block;
+    font-size: @font-size-base * 0.8;
+    transform: translate(4px, -24px);
+  }
+
+  &.reverseColor .up {
+    color: @green-6;
+  }
+  &.reverseColor .down {
+    color: @red-6;
+  }
+
+  .value {
+    display:inline-block;
+    padding-top: 5px;
+    margin-left : 25px;
+  }
+}

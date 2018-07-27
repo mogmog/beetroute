@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+
+    "socialmedia": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "type": "string"
+          },
+          "year": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          }
+        }
+
+      }
+    }
+  }
+}

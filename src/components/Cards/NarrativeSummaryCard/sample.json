@@ -1,0 +1,4 @@
+{
+  "title" : "I am a summary",
+  "values" : [{"title" : "A", "value" : 123}, {"title" : "B", "value" : 456}, {"title" : "C", "value" : 777}]
+}
