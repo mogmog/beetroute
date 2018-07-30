@@ -26,6 +26,7 @@
     "@kennethormandy/react-flipcard": "^0.4.3",
     "@mikeljames/draft-js-drag-n-drop-upload-plugin": "^2.0.1",
     "antd": "3.6.4",
+    "antd-mobile": "^2.2.2",
     "bizcharts": "^3.1.10",
     "bizcharts-plugin-slider": "^2.0.1",
     "classnames": "^2.2.5",
@@ -63,12 +64,14 @@
     "react-document-title": "^2.0.3",
     "react-dom": "^16.4.1",
     "react-fittext": "^1.0.0",
+    "react-instagram-embed": "^1.4.0",
     "react-mapbox-gl": "^3.8.0",
     "react-motion-ui-pack": "^0.10.3",
     "react-pdf": "^3.0.5",
     "react-youtube": "^7.6.0",
     "setprototypeof": "^1.1.0",
-    "url-polyfill": "^1.0.10"
+    "url-polyfill": "^1.0.10",
+    "vts-browser-js": "^2.15.16"
   },
   "devDependencies": {
     "babel-eslint": "^8.1.2",
@@ -121,5 +124,12 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 10"
-  ]
+  ],
+
+  "theme": {
+    "brand-primary": "red",
+    "color-text-base":  "#333",
+    "font-family-no-number" : "Proxima Nova Rg",
+    "font-family" : "Proxima Nova Rg"
+  }
 }

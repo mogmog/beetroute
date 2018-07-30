@@ -17,6 +17,8 @@ import Authorized from '../utils/Authorized';
 import {getMenuData} from '../common/menu';
 import logo from '../assets/logo.svg';
 
+import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.less'
+
 import {Motion, spring} from 'react-motion';
 
 import styles from './BasicLayout.less';
@@ -157,7 +159,6 @@ class BasicLayout extends React.PureComponent {
     return (
       <DocumentTitle title={this.getPageTitle()}>
 
-        <Content style={{ height: '100%'}}>
           <Switch>
 
             {getRoutes(match.path, routerData).map(item => (
@@ -173,7 +174,6 @@ class BasicLayout extends React.PureComponent {
             <Redirect exact from="/" to={bashRedirect} />
             <Route render={NotFound} />
           </Switch>
-        </Content>
 
       </DocumentTitle>
     );

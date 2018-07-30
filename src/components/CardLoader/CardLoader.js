@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 
-import NarrativeSummaryCard from '../Cards/NarrativeSummaryCard/NarrativeSummaryCard';
-import HeadlineCard from '../Cards/HeadlineCard/HeadlineCard';
+import PictureCard from '../Cards/PictureCard/PictureCard';
+import MapCard from '../Cards/MapCard/MapCard';
+import TextCard from '../Cards/TextCard/TextCard';
 
 const mappings = {
-  'NarrativeSummaryCard' : NarrativeSummaryCard,
-  'HeadlineCard' : HeadlineCard
-
+  'PictureCard' : PictureCard,
+  'MapCard' : MapCard,
+  'TextCard' : TextCard,
 }
 
 class CardLoader extends Component {
@@ -21,12 +22,13 @@ class CardLoader extends Component {
     const Card = mappings[this.props.card];
     const extra = this.props.extra;
     const clickevents = this.props.clickevents;
+    const index = this.props.index;
 
     if (!Card) return <span>No card defined in card loader</span>;
 
     return (
-      <div>
-        <Card pageActions={this.props.pageActions} data={this.props.data} clickevents={clickevents} extra={extra}  />
+      <div style={{padding: '5px'}}>
+        <Card index={index} pageActions={this.props.pageActions} data={this.props.data} clickevents={clickevents} extra={extra}  />
       </div>
     );
   }
