@@ -108,23 +108,36 @@ def create_app(config_name):
       return make_response(jsonify({ 'list' : results })), 200
 
 
+    @app.route('/api/real/cards/savecamera', methods=['POST'])
+    def set_camera():
+
+      jsoncard = request.data.get('card')
+      jsoncamera = request.data.get('camera')
+
+      #fix
+      card = Card.get_all().filter(Card.id.in_([jsoncard["id"]])).one()
+      card.camera = jsoncamera
+      card.save()
+
+      return make_response(jsonify({}), 200)
+
     @app.route('/api/real/cards', methods=['POST'])
     def list_cards():
 
       userid = request.data.get('userid', '0')
       key = request.data.get('key')
 
-      print(key["type"])
+      #print(key["type"])
 
-      sql = text('select id from cards where key->> \'type\' = \'' + key["type"] + '\' and key->>\'id\' =  \'' + str(key["id"]) + '\'')
-      result = db.engine.execute(sql)
+      #sql = text('select id from cards where key->> \'type\' = \'' + key["type"] + '\' and key->>\'id\' =  \'' + str(key["id"]) + '\'')
+      #result = db.engine.execute(sql)
 
-      cardids = []
-      for row in result:
-          cardids.append(row[0])
+      #cardids = []
+      #for row in result:
+      #    cardids.append(row[0])
 
-      cards = Card.get_all().filter(Card.id.in_(cardids)).all()
-      #cards = Card.get_all().all()
+      #cards = Card.get_all().filter(Card.id.in_(cardids)).all()
+      cards = Card.get_all().all()
 
       results = []
       for card in cards:

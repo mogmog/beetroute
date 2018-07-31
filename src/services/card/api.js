@@ -11,7 +11,7 @@ export async function queryCards(params) {
 }
 
 export async function saveCard(params) {
-  return request('/api/real/cards/save', {
+  return request('/api/real/cards/savecamera', {
     method: 'POST',
     body: {
       ...params,
