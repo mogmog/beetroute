@@ -89,6 +89,7 @@ export default class Admin extends Component {
               autoplay={false}
               selectedIndex={0}
               card={card.questioncards[slideIndex]}
+              beforeChange={(from, to) => console.log(from)}
               afterChange={(to, from) => {
                 this.setState({card: card.questioncards[to]});
                 this.setState({slideIndex: (to || 0)})
