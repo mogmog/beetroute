@@ -5,7 +5,7 @@ import _ from 'lodash';
 class MapBackground extends Component {
   constructor(props) {
     super(props);
-    this.state = {"isInitialPan" : true};
+    this.isInitialPan = true;
   }
 
   componentDidMount() {
@@ -16,21 +16,31 @@ class MapBackground extends Component {
 
     const that = this;
 
-    that.browser.on('map-position-changed',that.props.onCameraChange);
+    const onPointerUp = (e) => {
+      // console.log(this.browser.map.getPosition());
+      if (this.browser.map) that.props.onCameraChange(this.browser.map.getPosition().pos);
+    };
+
+    this.map.addEventListener("mouseup", onPointerUp);
+    this.map.addEventListener("mousewheel", onPointerUp);
+    this.map.addEventListener("touchend", onPointerUp);
   }
 
   componentDidUpdate(prevProps) {
 
-      if ((prevProps.slideIndex && (this.props.slideIndex !== prevProps.slideIndex)) || !prevProps.slideIndex) {
+    //idea - pass entire array of cards, and the index is the only thing that changes.
+    //stops crazy setstate stuff hppening
+    if ( (this.props.slideIndex === 0 && this.props.cards[this.props.slideIndex].camera.length) || (this.props.slideIndex !== prevProps.slideIndex)) {
 
-        this.browser.autopilot.flyTo(this.props.card.camera, {
+      if (this.props.cards[this.props.slideIndex].camera.length)
+        this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, {
           maxHeight: 1000,
-          maxDuration: 2500,
+          maxDuration: this.isInitialPan ? 100 : 300,
           mode: 'direct'
         });
 
-        this.browser.autopilot.setAutorotate(6);
-      }
+      // this.browser.autopilot.setAutorotate(6);
+    }
   }
 
   render() {
@@ -41,7 +51,7 @@ class MapBackground extends Component {
 
       <div className={styles.wrapper}>
         <div ref={(e) => this.map = e} style={{'width': '100vw', 'height': '100vh'}}></div>
-          {children}
+        {children}
       </div>);
   }
 }

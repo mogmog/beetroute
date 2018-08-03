@@ -4,7 +4,6 @@
   "description": "An out-of-box UI solution for enterprise applications",
   "private": true,
   "scripts": {
-    "precommit": "npm run lint-staged",
     "start": "cross-env ESLINT=none BROWSER=none roadhog dev",
     "start:no-proxy": "cross-env NO_PROXY=true ESLINT=none roadhog dev",
     "build": "cross-env ESLINT=none roadhog build",
@@ -125,11 +124,10 @@
     "last 2 versions",
     "not ie <= 10"
   ],
-
   "theme": {
     "brand-primary": "red",
-    "color-text-base":  "#333",
-    "font-family-no-number" : "Proxima Nova Rg",
-    "font-family" : "Proxima Nova Rg"
+    "color-text-base": "#333",
+    "font-family-no-number": "Proxima Nova Rg",
+    "font-family": "Proxima Nova Rg"
   }
 }

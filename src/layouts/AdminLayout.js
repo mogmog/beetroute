@@ -1,7 +1,15 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'dva';
+import _ from 'lodash';
 import Debounce from 'lodash-decorators/debounce';
-import {Carousel, Icon, Button, WhiteSpace, WingBlank} from 'antd-mobile';
+import Throttle from 'lodash-decorators/throttle';
+import {Flex, Carousel, Icon, Button, WhiteSpace, WingBlank} from 'antd-mobile';
+
+
+const PlaceHolder = ({className = '', ...restProps}) => (
+  <div className={`${className} placeholder`} {...restProps}>{restProps.children}</div>
+);
+
 import CardLoader from "../components/CardLoader/CardLoader";
 import MapBackground from "../components/Backgrounds/MapBackground";
 import styles from './AdminLayout.less';
@@ -21,7 +29,7 @@ export default class Admin extends Component {
     showCards: true,
     imgHeight: '100%',
     slideIndex: 0,
-    card: {camera: {}},
+    card: {camera: []},
   }
 
   componentDidMount() {
@@ -37,7 +45,32 @@ export default class Admin extends Component {
   }
 
   onCameraChange(e) {
-    this.position = e.position;
+    const {dispatch} = this.props;
+
+
+    const a = () => {
+console.log(1);
+      if (JSON.stringify(this.props.card.questioncards[this.state.slideIndex].camera) !==  JSON.stringify(e)) {
+
+        dispatch({
+          type: 'card/updatequestioncard',
+          payload: {"card": this.props.card.questioncards[this.state.slideIndex], camera: e},
+        }).then(x => {
+
+          // dispatch({
+          //   type: 'card/fetchquestioncards',
+          //   payload: {userId: 1, type: 'daycard'},
+          // });
+
+        });
+      }
+      }
+
+    a();
+
+      this.state.position = e;
+
+
   }
 
 //test
@@ -47,7 +80,7 @@ export default class Admin extends Component {
 
     dispatch({
       type: 'card/updatequestioncard',
-      payload: {"card": this.state.card, camera: this.position},
+      payload: {"card": this.state.card, camera: this.state.position},
     });
 
     dispatch({
@@ -64,17 +97,21 @@ export default class Admin extends Component {
     const {showCards, slideIndex} = this.state;
 
     const extra = (
-      [
 
-        <Button type={'primary'} key={1} onClick={this.save.bind(this)}>
-          Save {slideIndex}
-        </Button>,
+      <div>
+        <Flex wrap="wrap">
+          <PlaceHolder className="inline">
+            <Button type={'primary'} onClick={this.save.bind(this)}>
+              Use this location on other card ..
+            </Button>
+          </PlaceHolder>
+          <PlaceHolder className="inline"/>
 
-        <Button type={'warning'} key={2}>
-          Delete {slideIndex}
-        </Button>,
+        </Flex>
 
-      ]);
+
+      </div>
+    );
 
 
     return (
@@ -82,17 +119,17 @@ export default class Admin extends Component {
 
         {card.questioncards.length &&
         <MapBackground onCameraChange={this.onCameraChange.bind(this)} slideIndex={slideIndex}
-                       card={card.questioncards[slideIndex]}>
+                       cards={card.questioncards}>
           {showCards && <div className={styles.children}>
 
             <Carousel
               autoplay={false}
-              selectedIndex={0}
+              slideWidth={0.9}
               card={card.questioncards[slideIndex]}
               beforeChange={(from, to) => console.log(from)}
               afterChange={(to, from) => {
-                this.setState({card: card.questioncards[to]});
                 this.setState({slideIndex: (to || 0)})
+               // this.setState({card : card.questioncards[to]});
               }}
             >
 
