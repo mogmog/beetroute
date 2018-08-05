@@ -27,15 +27,15 @@ class MapBackground extends Component {
   }
 
   componentDidUpdate(prevProps) {
-
+console.log(this.props);
     //idea - pass entire array of cards, and the index is the only thing that changes.
     //stops crazy setstate stuff hppening
-    if ( (this.props.slideIndex === 0 && this.props.cards[this.props.slideIndex].camera.length) || (this.props.slideIndex !== prevProps.slideIndex)) {
+    if ( (this.props.slideIndex === 0 && this.props.cards[this.props.slideIndex].camera && this.props.cards[this.props.slideIndex].camera.length) || (this.props.slideIndex !== prevProps.slideIndex)) {
 
-      if (this.props.cards[this.props.slideIndex].camera.length)
+      if (this.props.cards[this.props.slideIndex].camera && this.props.cards[this.props.slideIndex].camera.length)
         this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, {
           maxHeight: 1000,
-          maxDuration: this.isInitialPan ? 100 : 300,
+          maxDuration: 2000,
           mode: 'direct'
         });
 

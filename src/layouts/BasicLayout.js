@@ -22,8 +22,6 @@ import 'antd-mobile/dist/antd-mobile.css';  // or 'antd-mobile/dist/antd-mobile.
 import {Motion, spring} from 'react-motion';
 
 import styles from './BasicLayout.less';
-import CardJSONEditor from "../components/CardJSONEditor/CardJSONEditor";
-import CardLoader from "../components/CardLoader/CardLoader";
 
 const {Content, Header, Footer} = Layout;
 const {AuthorizedRoute, check} = Authorized;
@@ -159,21 +157,21 @@ class BasicLayout extends React.PureComponent {
     return (
       <DocumentTitle title={this.getPageTitle()}>
 
-          <Switch>
+        <Switch>
 
-            {getRoutes(match.path, routerData).map(item => (
-              <AuthorizedRoute
-                key={item.key}
-                path={item.path}
-                component={item.component}
-                exact={item.exact}
-                authority={item.authority}
-                redirectPath="/exception/403"
-              />
-            ))}
-            <Redirect exact from="/" to={bashRedirect} />
-            <Route render={NotFound} />
-          </Switch>
+          {getRoutes(match.path, routerData).map(item => (
+            <AuthorizedRoute
+              key={item.key}
+              path={item.path}
+              component={item.component}
+              exact={item.exact}
+              authority={item.authority}
+              redirectPath="/exception/403"
+            />
+          ))}
+          <Redirect exact from="/" to={bashRedirect} />
+          <Route render={NotFound} />
+        </Switch>
 
       </DocumentTitle>
     );
