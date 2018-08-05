@@ -209,7 +209,7 @@ export default class Admin extends Component {
 
                   <Carousel
                     autoplay={false}
-                    slideWidth={0.8}
+                    slideWidth={0.9}
                     card={card.questioncards[slideIndex]}
                     beforeChange={(from, to) => console.log(from)}
                     afterChange={(to) => {
