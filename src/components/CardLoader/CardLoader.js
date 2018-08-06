@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import PictureCard from '../Cards/PictureCard/PictureCard';
 import MapCard from '../Cards/MapCard/MapCard';
 import TextCard from '../Cards/TextCard/TextCard';
+import CardGrower from "./CardGrower";
 
 const mappings = {
   'PictureCard' : PictureCard,
@@ -19,16 +20,17 @@ class CardLoader extends Component {
 
   render() {
 
-    const Card = mappings[this.props.card];
+    const DynamicCard = mappings[this.props.card];
     const extra = this.props.extra;
     const clickevents = this.props.clickevents;
     const index = this.props.index;
 
-    if (!Card) return <span>No card defined in card loader</span>;
+    if (!DynamicCard) return <span>No card defined in card loader</span>;
 
     return (
-      <div style={{padding: '5px'}}>
-        <Card index={index} pageActions={this.props.pageActions} data={this.props.data} clickevents={clickevents} extra={extra}  />
+      <div >
+        <CardGrower card={  <DynamicCard index={index} pageActions={this.props.pageActions} data={this.props.data} clickevents={clickevents} extra={extra}  />}>
+        </CardGrower>
       </div>
     );
   }

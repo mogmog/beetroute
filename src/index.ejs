@@ -25,11 +25,26 @@
     }
 
     body {
+      overscroll-behavior: contain;
       font-family: 'Proxima Nova Rg' !important;
+
     }
 
+    .my-carousel .v-item {
+      height: 360px;
+      line-height: 360px;
+      padding-left: 10px;
+    }
+
+
     .slider .slider-frame {
-      height: 44vh !important;
+      height: 60vh !important;
+      overflow:visible;
+
+    }
+
+    .slider .slider-decorator-0 {
+      bottom : -16px !important;
     }
 
     .vts-browser #vts-compass, .vts-browser .vts-search, .vts-browser .vts-credits, .vts-browser .vts-zoom, .vts-browser #vts-space {
@@ -44,7 +59,10 @@
 </head>
 
 <body>
-  <div id="root"></div>
+
+
+
+  <div id="root" stlye></div>
 </body>
 
 </html>

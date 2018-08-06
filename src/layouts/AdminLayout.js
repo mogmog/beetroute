@@ -68,7 +68,7 @@ export default class Admin extends Component {
 
     slideIndex: 0,
 
-    selectedTab: 'redTab',
+    selectedTab: 'blueTab',
     hidden: false,
     fullScreen: true,
 
@@ -211,7 +211,6 @@ export default class Admin extends Component {
                     autoplay={false}
                     slideWidth={0.9}
                     card={card.questioncards[slideIndex]}
-                    beforeChange={(from, to) => console.log(from)}
                     afterChange={(to) => {
                       this.setState({slideIndex: (to || 0)})
                     }}
