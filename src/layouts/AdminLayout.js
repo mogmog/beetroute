@@ -65,6 +65,7 @@ export default class Admin extends Component {
 
   state = {
     showCards: true,
+    hasOpenCard : false,
 
     slideIndex: 0,
 
@@ -92,6 +93,10 @@ export default class Admin extends Component {
       payload: {userId: 1, type: 'daycard'},
     });
 
+  }
+
+  setHasOpenCard(thing) {
+    this.setState({hasOpenCard : thing});
   }
 
   setCameraMode() {
@@ -149,7 +154,7 @@ export default class Admin extends Component {
   render() {
 
     const {card} = this.props;
-    const {showCards, slideIndex} = this.state;
+    const {showCards, slideIndex, hasOpenCard} = this.state;
 
     const extra = (
 
@@ -157,7 +162,7 @@ export default class Admin extends Component {
         <Flex wrap="wrap">
           <PlaceHolder className="inline">
             <Button type={'primary'} onClick={this.save.bind(this)}>
-              SAVE { slideIndex}
+              SAVE { hasOpenCard && <span>hasOpenCard</span>}
             </Button>
           </PlaceHolder>
           <PlaceHolder className="inline"/>
@@ -210,14 +215,16 @@ export default class Admin extends Component {
                   <Carousel
                     autoplay={false}
                     slideWidth={0.9}
-                    card={card.questioncards[slideIndex]}
+                    dragging={!hasOpenCard}
+                    swiping={!hasOpenCard}
                     afterChange={(to) => {
                       this.setState({slideIndex: (to || 0)})
                     }}
                   >
 
-                    {card.questioncards.map((card, index) => <CardLoader extra={ null } key={index} index={index}
-                                                                         card={'PictureCard'}/>)}
+                    {card.questioncards.map((card, index) =>
+                      <CardLoader setHasOpenCard={this.setHasOpenCard.bind(this)} extra={ extra } key={index} index={index} card={'RouteCard'} />
+                    )}
 
                   </Carousel>
 

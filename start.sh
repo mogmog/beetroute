@@ -22,3 +22,4 @@ tmux send-keys -t tracker:trackerWindow.2 'python run.py' C-j
 
 # finally attach to the session
 tmux attach -t tracker
+

@@ -4,40 +4,21 @@ import Swipeable from 'react-swipeable'
 
 import InstagramEmbed from 'react-instagram-embed'
 import {Card, WingBlank, WhiteSpace, Modal, Carousel, Button} from 'antd-mobile';
+import Picture from "./Picture";
 
 class PictureCard extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {modal: false};
+    this.state = {modal: false, currentThing : 0, slideIndex : 0};
 
-  }
-
-  componentDidMount() {
-    //window.instgrm.Embeds.process();
-  }
-
-  swiping(e, deltaX, deltaY, absX, absY, velocity) {
-    console.log("You're Swiping...", e, deltaX, deltaY, absX, absY, velocity)
-  }
-
-  swipingLeft(e, absX) {
-    console.log("You're Swiping to the Left...", e, absX)
-  }
-
-  swiped(e, deltaX, deltaY, isFlick, velocity) {
-    console.log("You Swiped...", e, deltaX, deltaY, isFlick, velocity)
-  }
-
-  swipedUp(e, deltaY, isFlick) {
-    console.log("You Swiped Up...", e, deltaY, isFlick)
   }
 
   render() {
 
-    const {data, onClick, extra, clickevents, index, open, onSwipeDown} = this.props;
+    const {data, onClick, extra, clickevents, index, open, onSwipeDown, onVerticalChange} = this.props;
 
-    const {modal} = this.state;
+    const {modal, currentThing} = this.state;
 
     const ig_json = {
       "version": "1.0",
@@ -60,69 +41,39 @@ class PictureCard extends Component {
     return (
 
       <div>
+        <Card>
 
-        <Modal
-          style={{width: '87.5%'}}
-          visible={modal}
-          transparent
-          maskClosable={true}
-        >
-          <div style={{overflow: 'scroll'}}>
-
-            <iframe src="https://www.instagram.com/p/BlL39XpgG9D/embed?caption=false" width="100%" height="480"
-                    frameBorder="0" scrolling="no" allowTransparency="true"></iframe>
-
-          </div>
-        </Modal>
-
-        <Card onClick={(e) => {
-          //this.setState({modal: true})
-        }}>
-
-
-          {extra && <Card.Header title={<span style={{width: '100%'}}>{extra}</span>}></Card.Header>}
           <Card.Body>
 
-test
-            <Carousel className="my-carousel"
-                      vertical
-                      selectedIndex={1}
-                      dragging={open}
-                      swiping={open}
-                      beforeChange={(from, to) => {if (from ===1 && to ===0) onSwipeDown() }}
+            <Swipeable
+
+
+              onSwipedDown={(e, abs) => {
+                //hack
+                if ((this.state.slideIndex === 0 || this.state.slideIndex === 1) && abs < 0) onVerticalChange(e, abs);
+              }}
+
             >
 
-              {
-                ['BlD9Iq6gI62', 'BlD9Iq6gI62', 'Bj7Y5VagLll', 'Bk8FXQaAJFu', 'Bf_IlUXjCep'].map((type, i) => (
-                     <iframe key={i} style={{pointerEvents: 'none', height : '300px'}} src={`https://www.instagram.com/p/${type}/embed?caption=false`} width="100%" height="300" frameBorder="0" scrolling="no" allowtransparency="true"></iframe>
-                )
+            <Carousel className="my-carousel"
+                      vertical
+                      selectedIndex={0}
+                      dragging={open}
+                      swiping={open}
+                      beforeChange={(from, to) => {
+                        this.setState({slideIndex: (to || 0)})
+                      }}
 
+            >
+              {
+                ['BlD9Iq6gI62', 'Bj7Y5VagLll', 'Bk8FXQaAJFu', 'Bf_IlUXjCep'].map((type, i) => (
+                    <div><Picture id={type} thekey={i}/></div>
+                )
                 )
               }
 
             </Carousel>
-
-            {/* <Carousel
-              autoplay={false}
-              dots={false}
-              infinite
-              vertical
-            >
-              {[1].map((val, index) => (
-                <a
-                  key={val + index}
-                >
-                  <img
-                    key={'dfdfdf' + index}
-                    src={index === 0 ? `https://scontent-lhr3-1.cdninstagram.com/vp/90f53826a813a8b2bbb899c52f96f031/5C07791C/t51.2885-15/e35/21819989_859302307560171_6598725257505275904_n.jpg` : `https://scontent-lhr3-1.cdninstagram.com/vp/fca2f285a57702a9e17ba6b13a066283/5BF3159C/t51.2885-15/e35/21879789_132582617375569_1489561097101901824_n.jpg`}
-                    alt=""
-                    style={{width: '100%', height: '250px'}}
-                  />
-                </a>
-              ))}
-            </Carousel>*/}
-
-
+            </Swipeable>
           </Card.Body>
         </Card>
 

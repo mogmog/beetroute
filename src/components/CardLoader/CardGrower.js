@@ -30,16 +30,23 @@ class CardGrower extends Component {
   }
 
   swipedDown(e, deltaY, isFlick) {
-    this.setState({open: false})
+   // this.setState({open: false})
   }
 
   swipedUp(e, deltaY, isFlick) {
-    this.setState({open: true})
+    this.setState({open: true });
+    if (typeof this.props.hasOpenCard === 'function') this.props.hasOpenCard(true);
+  }
+
+  onVerticalChange(e, abs) {
+     this.setState({open: false});
+    if (typeof this.props.hasOpenCard === 'function') this.props.hasOpenCard(false);
   }
 
   render() {
 
     const {card} = this.props;
+
 
     const {open} = this.state;
 
@@ -57,7 +64,7 @@ class CardGrower extends Component {
                 ({tween}) => (
 
                   <div className={styles.slide} style={{transform : `translate(0,${tween}px)`}}>
-                    {React.cloneElement( card, { open: open, onSwipeDown: this.swipedDown.bind(this) } )}
+                    {React.cloneElement( card, { open: open, onVerticalChange: this.onVerticalChange.bind(this), onSwipeDown: this.swipedDown.bind(this) } )}
                   </div>
 
                 )}
