@@ -1,5 +1,6 @@
 # app/__init__.py
 import json
+from datetime import datetime
 import jsonschema
 import random
 from flask_api import FlaskAPI, status
@@ -9,6 +10,10 @@ from flask import request, jsonify, abort, make_response
 from shapely.geometry import shape, Point
 from sqlalchemy import text
 import json
+import pprint
+from io import StringIO
+import dropbox
+import parser
 
 from shapely.geometry import shape, Point
 
@@ -19,6 +24,14 @@ from instance.config import app_config
 # For password hashing
 from flask_bcrypt import Bcrypt
 
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, datetime):
+            return o.isoformat()
+
+        return json.JSONEncoder.default(self, o)
+
+
 # initialize db
 db = SQLAlchemy()
 
@@ -27,6 +40,7 @@ from app.user_models import User, Session
 from app.importer_models import Country
 from app.targetgroup_models import TargetGroup
 from app.content_models import Content
+from app.beetroute_models import Trip
 
 loggedinuser = 0
 
@@ -120,6 +134,30 @@ def create_app(config_name):
       card.save()
 
       return make_response(jsonify({}), 200)
+
+    @app.route('/api/real/imports/gpx', methods=['GET'])
+    def import_gpx():
+
+      token = 'oekJIQrUYNIAAAAAAAAb0zcguhEZmoKSMd3VM4s5t5zTfOMvRg705-74r8RAGLVb'
+      thepath = '/Apps/tapiriik/'
+      dbx = dropbox.Dropbox(token)
+
+      response = dbx.files_list_folder(path=thepath)
+
+      for file in response.entries:
+       filewithpath = thepath + file.name
+       existingtrip = Trip.get_all().filter(Trip.filename == filewithpath).all()
+
+       if (len(existingtrip) == 0) :
+
+        #try:
+        md, res = dbx.files_download(filewithpath)
+
+        tcx = parser.TCXParser(res.content)
+        Trip(({'coordinates' : tcx.get_all(), 'distance' : float(tcx.distance)}), filewithpath).save()
+
+      return make_response(jsonify({'status': 'done'})), 200
+
 
     @app.route('/api/real/cards', methods=['POST'])
     def list_cards():
