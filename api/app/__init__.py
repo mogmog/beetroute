@@ -40,7 +40,7 @@ from app.user_models import User, Session
 from app.importer_models import Country
 from app.targetgroup_models import TargetGroup
 from app.content_models import Content
-from app.beetroute_models import Trip
+from app.beetroute_models import Trip, Waypoint
 
 loggedinuser = 0
 
@@ -154,9 +154,38 @@ def create_app(config_name):
         md, res = dbx.files_download(filewithpath)
 
         tcx = parser.TCXParser(res.content)
-        Trip(({'coordinates' : tcx.get_all(), 'distance' : float(tcx.distance)}), filewithpath).save()
+
+        waypoints = tcx.get_all()
+
+        trip = Trip(float(tcx.distance), filewithpath)
+
+        trip.save()
+
+        print(trip.id)
+
+        for waypoint in waypoints :
+          waypoint = Waypoint(trip.id, waypoint[0], waypoint[1], waypoint[2])
+          waypoint.save()
 
       return make_response(jsonify({'status': 'done'})), 200
+
+
+    @app.route('/api/real/waypoints', methods=['POST'])
+    def list_waypoints():
+
+      waypoints = Waypoint.get_all().order_by(Waypoint.time).all()
+
+      results = []
+
+      #only get every 10th waypoint
+      count = 0
+      for waypoint in waypoints:
+         count = count + 1
+
+         if count % 30 == 0:
+          results.append(waypoint.serialise())
+
+      return make_response(jsonify({ 'list' : results })), 200
 
 
     @app.route('/api/real/cards', methods=['POST'])

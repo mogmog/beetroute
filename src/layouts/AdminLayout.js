@@ -53,6 +53,7 @@ import styles from './AdminLayout.less';
 
   return {
     card: namespaces.card,
+    gpstracking : namespaces.gpstracking
   }
 })
 
@@ -83,6 +84,10 @@ export default class Admin extends Component {
         payload: {userId: 1, type: 'daycard'},
       });
 
+    dispatch({
+      type: 'gpstracking/fetch',
+      payload: {},
+    });
   }
 
 
@@ -153,8 +158,12 @@ export default class Admin extends Component {
 
   render() {
 
-    const {card} = this.props;
+    const {card, gpstracking} = this.props;
     const {showCards, slideIndex, hasOpenCard} = this.state;
+
+    console.log(gpstracking);
+
+    const thing = gpstracking.waypoints.map((x) => [x.longitude, x.latitude ]);
 
     const extra = (
 
@@ -208,8 +217,9 @@ export default class Admin extends Component {
               data-seed="logId"
             >
 
+
               {card.questioncards.length &&
-              <MapBackground onCameraChange={this.onCameraChange.bind(this)} slideIndex={slideIndex} cards={card.questioncards}>
+              <MapBackground onCameraChange={this.onCameraChange.bind(this)} slideIndex={slideIndex} cards={card.questioncards} waypoints={thing}>
                 { <div className={styles.children}>
 
                   <Carousel

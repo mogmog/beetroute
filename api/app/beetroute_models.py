@@ -17,10 +17,11 @@ class Trip(db.Model):
 
     id        = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String)
-    geojson  = db.Column(JSON)
+    distance = db.Column(db.Float)
+    waypoints = db.relationship("Waypoint")
 
-    def __init__(self, geojson, filename):
-        self.geojson = geojson
+    def __init__(self, distance, filename):
+        self.distance = distance
         self.filename = filename
 
     def save(self):
@@ -48,6 +49,52 @@ class Trip(db.Model):
         return  {
                    'id': self.id,
                    'filename' : self.filename,
-                   'geojson' : self.geojson
                 }
+
+
+class Waypoint(db.Model):
+    __tablename__ = 'waypoint'
+
+    id        = db.Column(db.Integer, primary_key=True)
+    longitude = db.Column(db.Float)
+    latitude  = db.Column(db.Float)
+    time      = db.Column(db.DateTime)
+    trip_id   = db.Column('tripId', db.Integer, db.ForeignKey('trip.id'))
+
+    def __init__(self, trip_id, longitude, latitude, time):
+        self.trip_id = trip_id
+        self.longitude = longitude
+        self.latitude = latitude
+        self.time = time
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @staticmethod
+    def get_all():
+        return Waypoint.query
+
+    @staticmethod
+    def delete_all():
+        db.session.query(Waypoint).delete()
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return "<Waypoint: {}>".format(self.id)
+
+    def serialise(self):
+
+        return  {
+                   'id': self.id,
+                   'trip_id'    : self.trip_id,
+                   'longitude'  : self.longitude,
+                   'latitude'   : self.latitude,
+                   'time'   : self.time
+                }
+
 

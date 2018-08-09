@@ -18,12 +18,12 @@ class RouteCard extends Component {
       <div>
         <Card style={{backgroundColor : 'rgba(255,255,255,0.4)'}}>
 
-          <Card.Header>
+         {/* <Card.Header>
             {extra}
-          </Card.Header>
+          </Card.Header>*/}
 
           <Card.Body>
-            <h2> I DISPLAY ROUTES </h2>
+            <h2 style={{textAlign : 'center', color : 'rgba(0,0,0,0.7)'}}> I DISPLAY ROUTES </h2>
           </Card.Body>
         </Card>
 

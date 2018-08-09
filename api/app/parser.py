@@ -42,7 +42,7 @@ class TCXParser:
       trackpoints = []
       for trackpoint in self.activity.xpath('.//ns:Trackpoint', namespaces=namespaces):
         if hasattr(trackpoint, 'Position'):
-          trackpoints.append((trackpoint.Position.LongitudeDegrees.pyval, trackpoint.Position.LatitudeDegrees.pyval))
+          trackpoints.append((trackpoint.Position.LongitudeDegrees.pyval, trackpoint.Position.LatitudeDegrees.pyval, trackpoint.Time.pyval ))
       return trackpoints
 
     @property
