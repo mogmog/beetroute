@@ -204,7 +204,7 @@ def create_app(config_name):
       #    cardids.append(row[0])
 
       #cards = Card.get_all().filter(Card.id.in_(cardids)).all()
-      cards = Card.get_all().all()
+      cards = Card.get_all().filter(Card.component == 'TextCard').all()
 
       results = []
       for card in cards:
@@ -212,6 +212,14 @@ def create_app(config_name):
 
       return make_response(jsonify({ 'list' : results })), 200
 
+    @app.route('/api/real/cards/new', methods=['POST'])
+    def new_card():
+
+      component = request.data.get('component')
+      camera = request.data.get('camera')
+
+      Card(component, {}, {}, camera).save()
+      return make_response(jsonify({ 'list' : [] })), 200
 
     return app
 

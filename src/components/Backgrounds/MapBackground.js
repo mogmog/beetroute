@@ -11,7 +11,6 @@ class MapBackground extends Component {
     this.state = {waypointsToShow : []};
   }
 
-
   componentDidMount() {
 
     this.browser = window.vts.browser(this.map, {
@@ -25,23 +24,35 @@ class MapBackground extends Component {
     function loadGEOJSON() {
 
       const map = that.browser.map;
-      let thing = 0;
-
       const renderer = that.browser.renderer;
+
+      // that.browser.mapMobileModeAutodect = false;
+      //that.browser.mapMobileMode = true;
+      /*that.browser.mapMobileTexelDegradation = 150;
+      that.browser.rendererAntialiasing = false;
+      that.browser.mapDownloadThreads = 3;
+      that.browser.mapNavSamplesPerViewExtent = 4;
+      that.browser.mapTexelSizeFit = 0.2;*/
+
+
 
       map.addRenderSlot('custom-render', onCustomRender, true);
       map.moveRenderSlotAfter('after-map-render', 'custom-render');
 
+
       function onCustomRender() {
 
-          const smaller = that.props.waypoints;
+        let done = false;
+        const smaller = that.props.waypoints;
 
+        if (!done) {
           var points = new Array(smaller.length);
 
           for (var i = 0; i < smaller.length; i++) {
             points[i] = map.convertCoordsFromNavToCanvas(smaller[i], 'float');
           }
-
+done = true;
+        }
           //draw line
           renderer.drawLineString({
             points : points,
@@ -61,7 +72,7 @@ class MapBackground extends Component {
 
     const onPointerUp = (e) => {
       // console.log(this.browser.map.getPosition());
-      if (this.browser.map) that.props.onCameraChange(this.browser.map.getPosition().pos);
+      if (this.browser.map && that.props.onCameraChange) that.props.onCameraChange(this.browser.map.getPosition().pos);
     };
 
     this.map.addEventListener("mouseup", onPointerUp);
@@ -73,11 +84,8 @@ class MapBackground extends Component {
 
   componentDidUpdate(prevProps) {
 
-    console.log(this.props.waypoints);
-
-    //idea - pass entire array of cards, and the index is the only thing that changes.
-    //stops crazy setstate stuff hppening
-    if ( (this.props.slideIndex === 0 && this.props.cards[this.props.slideIndex].camera && this.props.cards[this.props.slideIndex].camera.length) || (this.props.slideIndex !== prevProps.slideIndex)) {
+    if (this.props.cards[this.props.slideIndex]) {
+      if ((this.props.slideIndex !== prevProps.slideIndex)) {
 
       if (this.props.cards[this.props.slideIndex].camera && this.props.cards[this.props.slideIndex].camera.length)
         this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, {
@@ -86,7 +94,8 @@ class MapBackground extends Component {
           mode: 'direct'
         });
 
-       //this.browser.autopilot.setAutorotate(6);
+       // this.browser.autopilot.setAutorotate(-4);
+      }
     }
   }
 
@@ -97,7 +106,7 @@ class MapBackground extends Component {
     return (
 
       <div className={styles.wrapper}>
-        <div ref={(e) => this.map = e} style={{'width': '100vw', 'height': '100vh'}}></div>
+        <div ref={(e) => this.map = e} style={{'width': '100vw', 'height': '95vh'}}></div>
         {children}
       </div>);
   }

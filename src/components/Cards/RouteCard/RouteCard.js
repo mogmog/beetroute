@@ -23,7 +23,7 @@ class RouteCard extends Component {
           </Card.Header>*/}
 
           <Card.Body>
-            <h2 style={{textAlign : 'center', color : 'rgba(0,0,0,0.7)'}}> I DISPLAY ROUTES </h2>
+            <h2 style={{textAlign : 'center', color : 'rgba(0,0,0,0.7)'}}> I AM A SPACER </h2>
           </Card.Body>
         </Card>
 

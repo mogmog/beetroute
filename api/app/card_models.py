@@ -20,7 +20,7 @@ class Card(db.Model):
         self.component = component
         self.key = key
         self.data = data
-        self.camera = {}
+        self.camera = camera
 
     def save(self):
         db.session.add(self)

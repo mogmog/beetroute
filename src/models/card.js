@@ -26,6 +26,14 @@ export default {
       });
     },
 
+    *createquestioncard({payload}, {call, put}) {
+      const response = yield call(createCard, payload);
+      yield put({
+        type: 'savecreatequestioncard',
+        payload: response,
+      });
+    },
+
   },
 
   reducers: {

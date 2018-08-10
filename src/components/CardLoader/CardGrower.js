@@ -55,7 +55,7 @@ class CardGrower extends Component {
       <div className={styles.grower} style={{padding : '5px'}}>
 
         <Swipeable
-          onSwipedUp={this.swipedUp.bind(this)}
+        /*  onSwipedUp={this.swipedUp.bind(this)}*/
         >
           <div className={styles.wrapper} >
 

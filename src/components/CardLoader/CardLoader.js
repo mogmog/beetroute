@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import PictureCard from '../Cards/PictureCard/PictureCard';
 import RouteCard from '../Cards/RouteCard/RouteCard';
+import AddNewCard from '../Cards/AddNewCard/AddNewCard';
 
 import MapCard from '../Cards/MapCard/MapCard';
 import TextCard from '../Cards/TextCard/TextCard';
@@ -13,6 +14,7 @@ const mappings = {
   'MapCard' : MapCard,
   'TextCard' : TextCard,
   'RouteCard' : RouteCard,
+  'AddNewCard' : AddNewCard,
 }
 
 class CardLoader extends Component {
@@ -29,12 +31,15 @@ class CardLoader extends Component {
     const clickevents = this.props.clickevents;
     const index = this.props.index;
     const setHasOpenCard = this.props.setHasOpenCard;
+    const addCard = this.props.addCard;
+
+    //TODO consolidate all of this
 
     if (!DynamicCard) return <span>No card defined in card loader</span>;
 
     return (
       <div >
-        <CardGrower setHasOpenCard={ setHasOpenCard } card={  <DynamicCard index={index} pageActions={this.props.pageActions} data={this.props.data} clickevents={clickevents} extra={extra}  />}>
+        <CardGrower addCard={addCard} setHasOpenCard={ setHasOpenCard } card={  <DynamicCard index={index} pageActions={this.props.pageActions} data={this.props.data} clickevents={clickevents} extra={extra}  />}>
         </CardGrower>
       </div>
     );

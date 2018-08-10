@@ -4,22 +4,16 @@ import {connect} from 'dva';
 import _ from 'lodash';
 import Debounce from 'lodash-decorators/debounce';
 import Throttle from 'lodash-decorators/throttle';
+
 import {Flex, Carousel, Icon, Button, WhiteSpace, WingBlank, TabBar } from 'antd-mobile';
-import { PullToRefresh, ListView  } from 'antd-mobile';
+import { PullToRefresh, ListView  , Popover, NavBar} from 'antd-mobile';
+
+const Item = Popover.Item;
+
+const myImg = src => <img src={`https://gw.alipayobjects.com/zos/rmsportal/${src}.svg`} className="am-icon am-icon-xs" alt="" />;
 
 
 
-function genData(pIndex = 0) {
-  const dataArr = [];
-  for (let i = 0; i < NUM_ROWS; i++) {
-    dataArr.push(`row - ${(pIndex * NUM_ROWS) + i}`);
-  }
-  return dataArr;
-}
-
-const PlaceHolder = ({className = '', ...restProps}) => (
-  <div className={`${className} placeholder`} {...restProps}>{restProps.children}</div>
-);
 
 const data = [
   {
@@ -67,12 +61,16 @@ export default class Admin extends Component {
   state = {
     showCards: true,
     hasOpenCard : false,
+    selectedIndex : 0,
 
     slideIndex: 0,
 
     selectedTab: 'blueTab',
     hidden: false,
     fullScreen: true,
+
+    visible: false,
+    selected: '',
 
   }
 
@@ -100,6 +98,21 @@ export default class Admin extends Component {
 
   }
 
+  onSelect (opt) {
+    // console.log(opt.props.value);
+    this.setState({
+      visible: false,
+      selected: opt.props.value,
+    });
+
+    this.addCard(opt.props.value);
+  }
+  handleVisibleChange(visible) {
+    this.setState({
+      visible,
+    });
+  };
+
   setHasOpenCard(thing) {
     this.setState({hasOpenCard : thing});
   }
@@ -108,8 +121,8 @@ export default class Admin extends Component {
     this.setState({showCards: false});
   }
 
-  onCameraChange(e) {
-    this.position = e;
+  onCameraChange(position) {
+    this.setState({ position });
   }
 
 //test
@@ -133,7 +146,29 @@ export default class Admin extends Component {
 
   }
 
+  addCard(component) {
+
+    const {dispatch} = this.props;
+
+    dispatch({
+      type: 'card/createquestioncard',
+      payload: {component, camera : this.state.position},
+    }).then((e) => {
+      dispatch({
+        type: 'card/fetchquestioncards',
+        payload: {userId: 1, type: 'daycard'},
+      });
+    })
+  }
+
+
   componentDidUpdate() {
+
+    if (this.state.selectedIndex !== this.props.card.questioncards.length - 1) {
+      /* eslint react/no-did-update-set-state: 0 */
+      this.setState({ selectedIndex: this.props.card.questioncards.length - 1 });
+    }
+
   }
 
   renderContent(pageText, showCards, slideIndex) {
@@ -160,33 +195,88 @@ export default class Admin extends Component {
 
     const {card, gpstracking} = this.props;
     const {showCards, slideIndex, hasOpenCard} = this.state;
-
-    console.log(gpstracking);
-
+console.log("rendering");
     const thing = gpstracking.waypoints.map((x) => [x.longitude, x.latitude ]);
 
     const extra = (
 
       <div>
         <Flex wrap="wrap">
-          <PlaceHolder className="inline">
             <Button type={'primary'} onClick={this.save.bind(this)}>
               SAVE { hasOpenCard && <span>hasOpenCard</span>}
             </Button>
-          </PlaceHolder>
-          <PlaceHolder className="inline"/>
-
         </Flex>
-
-
       </div>
     );
 
     return (
       <div className='top'>
 
-        <div style={this.state.fullScreen ? { position: 'fixed', height: '100%', width: '100%', top: 0 } : { height: 400 }}>
-          <TabBar
+          <NavBar
+            style={{ backgroundColor: 'rgba(255,255,255,0.2)'}}
+            mode="light"
+            rightContent={
+              <Popover mask
+                       overlayClassName="fortest"
+                       overlayStyle={{ color: 'currentColor' }}
+                       visible={this.state.visible}
+                       overlay={[
+                         (<Item key="TextCard" value="TextCard" icon={myImg('tOtXhkIWzwotgGSeptou')} data-seed="logId">Add Text</Item>),
+                         (<Item key="PhotoCard" value="PhotoCard" icon={myImg('PKAgAqZWJVNwKsAJSmXd')} style={{ whiteSpace: 'nowrap' }}>Add photo</Item>),
+                         (<Item key="SpacerCard" value="SpacerCard" icon={myImg('uQIYTFeRrjPELImDRrPt')}>
+                           <span style={{ marginRight: 5 }}>Add spacer </span>
+                         </Item>),
+                       ]}
+                       align={{
+                         overflow: { adjustY: 0, adjustX: 0 },
+                         offset: [-10, 0],
+                       }}
+                       onVisibleChange={this.handleVisibleChange.bind(this)}
+                       onSelect={this.onSelect.bind(this)}
+              >
+                <div style={{
+                  height: '100%',
+                  padding: '0 15px',
+                  marginRight: '-15px',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+                >
+                  <Icon type="ellipsis" />
+                </div>
+              </Popover>
+            }
+          >
+            </NavBar>
+
+          {true && card.questioncards.length &&
+          <MapBackground  slideIndex={slideIndex} cards={card.questioncards} waypoints={thing}>
+            { <div className={styles.children}>
+
+              <Carousel
+                autoplay={false}
+                slideWidth={0.9}
+                selectedIndex={this.state.selectedIndex}
+                dragging={!hasOpenCard}
+                swiping={!hasOpenCard}
+                afterChange={(to) => {
+                  this.setState({slideIndex: (to || 0)})
+                }}
+              >
+
+                {card.questioncards.map((card, index) =>
+                  <CardLoader setHasOpenCard={this.setHasOpenCard.bind(this)} extra={ extra } key={index} index={index} card={'RouteCard'} />
+                )}
+
+                 {/*  <CardLoader setHasOpenCard={this.setHasOpenCard.bind(this)} extra={ extra } key={-12} card={'AddNewCard'} />*/}
+
+              </Carousel>
+
+            </div>}
+
+          </MapBackground>}
+
+          {/*<TabBar
             unselectedTintColor="#949494"
             tintColor="#33A3F4"
             barTintColor="white"
@@ -218,29 +308,7 @@ export default class Admin extends Component {
             >
 
 
-              {card.questioncards.length &&
-              <MapBackground onCameraChange={this.onCameraChange.bind(this)} slideIndex={slideIndex} cards={card.questioncards} waypoints={thing}>
-                { <div className={styles.children}>
 
-                  <Carousel
-                    autoplay={false}
-                    slideWidth={0.9}
-                    dragging={!hasOpenCard}
-                    swiping={!hasOpenCard}
-                    afterChange={(to) => {
-                      this.setState({slideIndex: (to || 0)})
-                    }}
-                  >
-
-                    {card.questioncards.map((card, index) =>
-                      <CardLoader setHasOpenCard={this.setHasOpenCard.bind(this)} extra={ extra } key={index} index={index} card={'RouteCard'} />
-                    )}
-
-                  </Carousel>
-
-                </div>}
-
-              </MapBackground>}
 
             </TabBar.Item>
             <TabBar.Item
@@ -312,9 +380,7 @@ export default class Admin extends Component {
             >
               {this.renderContent('My', showCards, slideIndex)}
             </TabBar.Item>
-          </TabBar>
-        </div>
-
+          </TabBar>*/}
       </div>
     );
 
