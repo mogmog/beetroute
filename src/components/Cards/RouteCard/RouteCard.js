@@ -1,29 +1,49 @@
 import React, {Component} from 'react';
-import {Card, WingBlank, WhiteSpace, Modal, Carousel, Button} from 'antd-mobile';
+import {SegmentedControl, Card, WingBlank, WhiteSpace, Modal, Carousel, Button} from 'antd-mobile';
+import {EditorState, convertFromRaw, convertToRaw} from 'draft-js'
+import CustomEditor from "./CustomEditor";
 
 class RouteCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {editorState: '', type: ''};
+
+  }
+
+  onChange(value) {
+    this.setState({value})
   }
 
   render() {
 
-    const {data, onClick, extra, clickevents, index, open, onSwipeDown, onVerticalChange} = this.props;
+    const {data, onClick, extra, clickevents, index, open, onSwipeDown, onVerticalChange, setToolbar} = this.props;
 
-    const {modal, currentThing} = this.state;
+    const {editorState, modal} = this.state;
 
     return (
 
       <div>
-        <Card style={{backgroundColor : 'rgba(255,255,255,0.4)'}}>
 
-         {/* <Card.Header>
-            {extra}
-          </Card.Header>*/}
+        <Card style={{backgroundColor: 'rgba(255,255,255,0.5)'}}>
 
-          <Card.Body>
-            <h2 style={{textAlign : 'center', color : 'rgba(0,0,0,0.7)'}}> I AM A SPACER </h2>
+          <Card.Body style={{padding : 0}}>
+
+            {this.state.type === '' && <div>
+            <Button onClick={(e)=> this.setState({type : 'text'})}>Text {data.id}</Button>
+            <WhiteSpace/>
+            <Button onClick={(e)=> this.setState({type : 'photo'})}>Photo</Button>
+            <WhiteSpace/>
+            <Button>Spacer</Button>
+            </div>}
+
+            {this.state.type == 'text' &&
+            <div>
+              <CustomEditor data={data} />
+             {/* <Button onClick={(e) => this.setState({modal: false, type: 'text'})}>Save</Button>*/}
+            </div>}
+
+
+
           </Card.Body>
         </Card>
 

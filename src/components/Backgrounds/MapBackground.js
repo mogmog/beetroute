@@ -62,17 +62,12 @@ done = true;
             depthOffset : [0,0,-7],
             blend : true
           });
-
       }
-
-
-
-
     }
 
     const onPointerUp = (e) => {
       // console.log(this.browser.map.getPosition());
-      if (this.browser.map && that.props.onCameraChange) that.props.onCameraChange(this.browser.map.getPosition().pos);
+      if (true && this.browser.map && that.props.onCameraChange) that.props.onCameraChange(this.browser.map.getPosition().pos);
     };
 
     this.map.addEventListener("mouseup", onPointerUp);
@@ -84,8 +79,22 @@ done = true;
 
   componentDidUpdate(prevProps) {
 
-    if (this.props.cards[this.props.slideIndex]) {
-      if ((this.props.slideIndex !== prevProps.slideIndex)) {
+    if (this.props.slideIndex !== prevProps.slideIndex) {
+      console.log("changed slidEIndex to " + this.props.slideIndex + " to " + prevProps.slideIndex)
+
+      this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, {
+        maxHeight: 1000,
+        maxDuration: 2000,
+        mode: 'direct'
+      });
+    }
+
+    if (false && this.props.cards[this.props.slideIndex] !== undefined) {
+
+      console.log(this.props.slideIndex, prevProps.slideIndex);
+      console.log(this.props.cards);
+console.log(this.props.cards[this.props.slideIndex].camera);
+      if (JSON.stringify(this.props.position) !== JSON.stringify(prevProps.position)) {
 
       if (this.props.cards[this.props.slideIndex].camera && this.props.cards[this.props.slideIndex].camera.length)
         this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, {

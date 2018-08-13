@@ -21,7 +21,7 @@ export default {
     *updatequestioncard({payload}, {call, put}) {
       const response = yield call(saveCard, payload);
       yield put({
-        type: 'savecreatequestioncard',
+        type: 'savefetchquestioncards',
         payload: response,
       });
     },

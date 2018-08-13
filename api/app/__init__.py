@@ -133,7 +133,13 @@ def create_app(config_name):
       card.camera = jsoncamera
       card.save()
 
-      return make_response(jsonify({}), 200)
+      cards = Card.get_all().filter(Card.component == 'TextCard').order_by(Card.id).all()
+
+      results = []
+      for card in cards:
+         results.append(card.serialise())
+
+      return make_response(jsonify({ 'list' : results })), 200
 
     @app.route('/api/real/imports/gpx', methods=['GET'])
     def import_gpx():
@@ -182,7 +188,7 @@ def create_app(config_name):
       for waypoint in waypoints:
          count = count + 1
 
-         if count % 30 == 0:
+         if count % 1000 == 0:
           results.append(waypoint.serialise())
 
       return make_response(jsonify({ 'list' : results })), 200
@@ -204,7 +210,7 @@ def create_app(config_name):
       #    cardids.append(row[0])
 
       #cards = Card.get_all().filter(Card.id.in_(cardids)).all()
-      cards = Card.get_all().filter(Card.component == 'TextCard').all()
+      cards = Card.get_all().filter(Card.component == 'TextCard').order_by(Card.id).all()
 
       results = []
       for card in cards:
