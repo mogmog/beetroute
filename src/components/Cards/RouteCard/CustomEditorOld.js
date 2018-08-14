@@ -1,8 +1,6 @@
 import React from "react";
 import Quill from 'quill';
 import styles from './CustomEditor.less';
-console.log(Quill);
-
 
 class Editor extends React.Component {
   constructor() {
@@ -12,19 +10,45 @@ class Editor extends React.Component {
 
   componentDidMount() {
 
+    const { onChange, index } = this.props;
+
+    var toolbarOptions = [
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+      ['blockquote', 'code-block'],
+
+      [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+      [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+      [{ 'direction': 'rtl' }],                         // text direction
+
+      [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [ 'link', 'image', 'video', 'formula' ],          // add's image support
+      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+      [{ 'font': [] }],
+      [{ 'align': [] }],
+
+      ['clean']
+    ];
+
     var quill = new Quill(this.editor, {
       modules: {
-        toolbar: '#quilltoolbar'
+        toolbar: toolbarOptions
       },
       placeholder: '...',
-      theme: 'snow'  // or 'bubble'
+      theme: 'snow',
     });
 
     quill.on('text-change', function() {
-      var delta = quill.getContents();
+      console.log(onChange);
+      onChange(index, quill.getContents());
+
     });
 
-    quill.setContents({"ops":[{"insert":"!!!!!!!frg dfgfdg dfgdfgfdgdfgfdgfgg\n\nfghfgfgfgfgfgfgfg"},{"attributes":{"header":1},"insert":"\n"},{"insert":"\nthisdfgfgfgfgfgfgfgfg is a test \n"}]});
+    quill.setContents(this.props.data);
+
+    quill.focus();
 
   }
 

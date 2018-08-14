@@ -1,22 +1,22 @@
 import React, {Component} from 'react';
 import {SegmentedControl, Card, WingBlank, WhiteSpace, Modal, Carousel, Button} from 'antd-mobile';
 import {EditorState, convertFromRaw, convertToRaw} from 'draft-js'
-import CustomEditor from "./CustomEditor";
+import CustomEditor from "./CustomEditorOld";
 
 class RouteCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {editorState: '', type: ''};
+    this.state = { editorState: this.props.data.data };
 
   }
 
-  onChange(value) {
-    this.setState({value})
+  onChange(editorState) {
+    this.setState({editorState})
   }
 
   render() {
 
-    const {data, onClick, extra, clickevents, index, open, onSwipeDown, onVerticalChange, setToolbar} = this.props;
+    const { pageActions, index } = this.props;
 
     const {editorState, modal} = this.state;
 
@@ -27,23 +27,7 @@ class RouteCard extends Component {
         <Card style={{backgroundColor: 'rgba(255,255,255,0.5)'}}>
 
           <Card.Body style={{padding : 0}}>
-
-            {this.state.type === '' && <div>
-            <Button onClick={(e)=> this.setState({type : 'text'})}>Text {data.id}</Button>
-            <WhiteSpace/>
-            <Button onClick={(e)=> this.setState({type : 'photo'})}>Photo</Button>
-            <WhiteSpace/>
-            <Button>Spacer</Button>
-            </div>}
-
-            {this.state.type == 'text' &&
-            <div>
-              <CustomEditor data={data} />
-             {/* <Button onClick={(e) => this.setState({modal: false, type: 'text'})}>Save</Button>*/}
-            </div>}
-
-
-
+              <CustomEditor index={index} onChange={pageActions.updateText} data={editorState} />
           </Card.Body>
         </Card>
 

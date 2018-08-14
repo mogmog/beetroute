@@ -39,7 +39,7 @@ class CardLoader extends Component {
 
     return (
       <div >
-        <CardGrower addCard={addCard} setHasOpenCard={ setHasOpenCard } card={  <DynamicCard index={index} pageActions={this.props.pageActions} data={this.props.data} clickevents={clickevents} extra={extra}  />}>
+        <CardGrower card={  <DynamicCard index={index} pageActions={this.props.pageActions} data={this.props.data} clickevents={clickevents} extra={extra}  />}>
         </CardGrower>
       </div>
     );

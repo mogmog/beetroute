@@ -73,6 +73,27 @@ export default class Admin extends Component {
 
   }
 
+  updateText(index, delta) {
+    //alert("shouldnt hapopen at 1645");
+
+    const {dispatch, card} = this.props;
+
+    const thecard = card.questioncards[index];
+
+    console.log(JSON.stringify(thecard.data), JSON.stringify(delta));
+
+    if (JSON.stringify(thecard.data) !== JSON.stringify(delta)) {
+
+      thecard.data = delta;
+
+      dispatch({
+        type: 'card/updatequestioncard',
+        payload: { "card": thecard },
+      })
+    }
+
+  }
+
   save() {
 
     const {dispatch} = this.props;
@@ -114,9 +135,10 @@ export default class Admin extends Component {
 
   componentDidUpdate() {
 
-    if (this.props.card.questioncards.length && this.state.selectedIndex === 0 && !this.state.position) {
+    //this is a buggy way to fix the fact that the first card is not setting the position
+  /*  if (this.props.card.questioncards.length && this.state.selectedIndex === 0 && !this.state.position) {
       this.setState({position : this.props.card.questioncards[0].camera });
-    }
+    }*/
 
     //console.log("componentDidUpdate");
     if (this.state.selectedIndex !== this.props.card.questioncards.length - 1) {
@@ -184,7 +206,7 @@ export default class Admin extends Component {
               >
 
                 {card.questioncards.map((card, index) =>
-                  <CardLoader setHasOpenCard={(e) => {}} data={card} extra={ extra } key={index} index={index} card={'RouteCard'} />
+                  <CardLoader pageActions={{updateText : this.updateText.bind(this)}} data={card} extra={ extra } key={index} index={index} card={'RouteCard'} />
                 )}
 
               </Carousel>
