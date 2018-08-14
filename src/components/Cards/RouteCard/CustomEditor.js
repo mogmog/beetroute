@@ -6,7 +6,7 @@ import GeoLocate from './geolocate';
 export default class CustomEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { editorHtml: "<h1> </h1>" };
+    this.state = { editorHtml: { }};
   }
 
   handleChange(html) {
