@@ -15,12 +15,14 @@ class Card(db.Model):
     key = db.Column(JSONB(astext_type=Text()))
     data = db.Column(db.JSON)
     camera = db.Column(db.JSON)
+    cameraOptions = db.Column(db.JSON)
 
-    def __init__(self, component, key, data, camera):
+    def __init__(self, component, key, data, camera, cameraOptions):
         self.component = component
         self.key = key
         self.data = data
         self.camera = camera
+        self.cameraOptions = cameraOptions
 
     def save(self):
         db.session.add(self)
@@ -49,7 +51,8 @@ class Card(db.Model):
                    'component' : self.component,
                    'key' : self.key,
                    'data' : self.data,
-                   'camera' : self.camera
+                   'camera' : self.camera,
+                   'cameraOptions' : self.cameraOptions
                 }
 
 

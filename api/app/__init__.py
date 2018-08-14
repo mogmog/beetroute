@@ -223,9 +223,17 @@ def create_app(config_name):
 
       component = request.data.get('component')
       camera = request.data.get('camera')
+      cameraOptions = request.data.get('cameraOptions')
 
-      Card(component, {}, {}, camera).save()
-      return make_response(jsonify({ 'list' : [] })), 200
+      Card(component, {}, {}, camera, cameraOptions).save()
+
+      cards = Card.get_all().filter(Card.component == 'TextCard').order_by(Card.id).all()
+
+      results = []
+      for card in cards:
+         results.append(card.serialise())
+
+      return make_response(jsonify({ 'list' : results })), 200
 
     return app
 

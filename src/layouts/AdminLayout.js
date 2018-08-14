@@ -2,9 +2,6 @@ import React, {Component, Fragment} from 'react';
 import  ReactDOM from 'react-dom';
 import {connect} from 'dva';
 import _ from 'lodash';
-import Debounce from 'lodash-decorators/debounce';
-import Throttle from 'lodash-decorators/throttle';
-
 import { HtmlEditor, MenuBar  } from '@aeaton/react-prosemirror'
 
 import {Flex, Carousel, Icon, Button, WhiteSpace, WingBlank, TabBar } from 'antd-mobile';
@@ -12,10 +9,9 @@ import { PullToRefresh, ListView  , Popover, NavBar} from 'antd-mobile';
 
 const Item = Popover.Item;
 
-const myImg = src => <img src={`https://gw.alipayobjects.com/zos/rmsportal/${src}.svg`} className="am-icon am-icon-xs" alt="" />;
-
 import CardLoader from "../components/CardLoader/CardLoader";
 import MapBackground from "../components/Backgrounds/MapBackground";
+import GeoLocate from '../components/Cards/RouteCard/geolocate';
 import styles from './AdminLayout.less';
 
 @connect((namespaces) => {
@@ -64,21 +60,6 @@ export default class Admin extends Component {
 
   }
 
-  onSelect (opt) {
-    // console.log(opt.props.value);
-    this.setState({
-      visible: false,
-      selected: opt.props.value,
-    });
-
-    this.addCard(opt.props.value);
-  }
-  handleVisibleChange(visible) {
-    this.setState({
-      visible,
-    });
-  };
-
   setHasOpenCard(thing) {
     this.setState({hasOpenCard : thing});
   }
@@ -109,23 +90,33 @@ export default class Admin extends Component {
     }
   }
 
-  addCard(component) {
+  addCard(component, coords) {
+
+    const camera = ["obj",coords.longitude, coords.latitude, "float",0,10,-90,0,27308,55];
 
     const {dispatch} = this.props;
 
+    const defaultCameraOptions = {
+      maxHeight: 1000,
+      maxDuration: 2000,
+      mode: 'direct',
+      rotate : false,
+    };
+
     dispatch({
       type: 'card/createquestioncard',
-      payload: {component, camera : this.props.card.questioncards[this.state.selectedIndex].camera },
-    }).then((e) => {
-      dispatch({
-        type: 'card/fetchquestioncards',
-        payload: {userId: 1, type: 'daycard'},
-      });
+      payload: {component, camera : camera, cameraOptions : defaultCameraOptions },
+    }).then(()=> {
+      this.setState({selectedIndex : this.state.selectedIndex + 1});
     })
   }
 
 
   componentDidUpdate() {
+
+    if (this.props.card.questioncards.length && this.state.selectedIndex === 0 && !this.state.position) {
+      this.setState({position : this.props.card.questioncards[0].camera });
+    }
 
     //console.log("componentDidUpdate");
     if (this.state.selectedIndex !== this.props.card.questioncards.length - 1) {
@@ -133,10 +124,6 @@ export default class Admin extends Component {
       //this.setState({ selectedIndex: this.props.card.questioncards.length - 1 });
     }
 
-  }
-
-  setToolbar(custom_menu, state, dispatch) {
-    this.setState({Element : {custom_menu : custom_menu, state : state, dispatch : dispatch }});
   }
 
   render() {
@@ -169,33 +156,9 @@ export default class Admin extends Component {
               </Button>
             }
             rightContent={
-              <Popover mask
-                       overlayClassName="fortest"
-                       overlayStyle={{ color: 'currentColor' }}
-                       visible={this.state.visible}
-                       overlay={[
-                         (<Item key="TextCard" value="TextCard" icon={myImg('tOtXhkIWzwotgGSeptou')} data-seed="logId">Add Card</Item> ),
-                       ]}
-                       align={{
-                         overflow: { adjustY: 0, adjustX: 0 },
-                         offset: [-10, 0],
-                       }}
-                       onVisibleChange={this.handleVisibleChange.bind(this)}
-                       onSelect={this.onSelect.bind(this)}
-              >
-                <div style={{
-                  height: '100%',
-                  padding: '0 15px',
-                  marginRight: '-15px',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-                >
-                  <Icon type="ellipsis" />
-                </div>
+              <GeoLocate addCard={this.addCard.bind(this)}>
 
-
-              </Popover>
+              </GeoLocate>
             }
           >
 

@@ -87,25 +87,11 @@ done = true;
         maxDuration: 2000,
         mode: 'direct'
       });
+
+      if (this.props.cards[this.props.slideIndex].cameraOptions.rotate) this.browser.autopilot.setAutorotate(-4);
+
     }
 
-    if (false && this.props.cards[this.props.slideIndex] !== undefined) {
-
-      console.log(this.props.slideIndex, prevProps.slideIndex);
-      console.log(this.props.cards);
-console.log(this.props.cards[this.props.slideIndex].camera);
-      if (JSON.stringify(this.props.position) !== JSON.stringify(prevProps.position)) {
-
-      if (this.props.cards[this.props.slideIndex].camera && this.props.cards[this.props.slideIndex].camera.length)
-        this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, {
-          maxHeight: 1000,
-          maxDuration: 2000,
-          mode: 'direct'
-        });
-
-       // this.browser.autopilot.setAutorotate(-4);
-      }
-    }
   }
 
   render() {
@@ -115,7 +101,7 @@ console.log(this.props.cards[this.props.slideIndex].camera);
     return (
 
       <div className={styles.wrapper}>
-        <div ref={(e) => this.map = e} style={{'width': '100vw', 'height': '95vh'}}></div>
+        <div ref={(e) => this.map = e} style={{'height': '100vh'}}></div>
         {children}
       </div>);
   }

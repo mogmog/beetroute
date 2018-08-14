@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import ReactQuill from 'react-quill'; // ES6
 import PropTypes from 'prop-types';
+import GeoLocate from './geolocate';
 
 export default class CustomEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { editorHtml: "test" };
+    this.state = { editorHtml: "<h1> </h1>" };
   }
 
   handleChange(html) {
@@ -16,14 +17,15 @@ export default class CustomEditor extends React.Component {
     return (
       <div className="text-editor">
 
-        <ReactQuill
-          id={'quill_' + this.props.data.id}
-          value={this.state.editorHtml}
-          onChange={this.handleChange.bind(this)}
-          modules={CustomEditor.modules}
-          formats={CustomEditor.formats}
-          theme={"snow"} // pass false to use minimal theme
-        />
+          <ReactQuill
+            id={'quill_' + this.props.data.id}
+            value={this.state.editorHtml}
+            onChange={this.handleChange.bind(this)}
+            modules={CustomEditor.modules}
+            formats={CustomEditor.formats}
+            theme={"snow"} // pass false to use minimal theme
+          />
+
       </div>
     );
   }
