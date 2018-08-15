@@ -35,6 +35,8 @@ export default class Admin extends Component {
   dropCount = 0;
 
   state = {
+    data: ['1', '2', '3'],
+    imgHeight: 350,
     hasOpenCard : false,
     selectedIndex : 0,
     position : undefined,
@@ -54,6 +56,13 @@ export default class Admin extends Component {
       type: 'gpstracking/fetch',
       payload: {},
     });
+
+    setTimeout(() => {
+      this.setState({
+        data: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI'],
+      });
+    }, 100);
+
   }
 
   onCameraChange(position) {
@@ -231,7 +240,7 @@ export default class Admin extends Component {
             mode="light"
             leftContent={
               <Button type={'primary'} onClick={ this.save.bind(this)}>
-                Save and next
+                Save
               </Button>
             }
             rightContent={
@@ -251,7 +260,8 @@ export default class Admin extends Component {
 
               <Carousel
                 autoplay={false}
-                slideWidth={0.95}
+                slideWidth={0.9}
+                cellSpacing={10}
                 selectedIndex={this.state.selectedIndex}
                 dragging={!hasOpenCard}
                 swiping={!hasOpenCard}
@@ -261,9 +271,13 @@ export default class Admin extends Component {
                 }}
               >
 
-                {card.questioncards.map((card, index) =>
-                  <CardLoader pageActions={{updateText : this.updateText.bind(this), updateText : this.updateText.bind(this)}} data={card} extra={ extra } key={index} index={index} card={'RouteCard'} />
-                )}
+                {card.questioncards.map((card, index) => (
+
+                    <div style={{ width: '100%', verticalAlign: 'top', height: this.state.imgHeight }}>
+                      <CardLoader pageActions={{updateText : this.updateText.bind(this), updateText : this.updateText.bind(this)}} data={card} extra={ extra } key={index} index={index} card={'RouteCard'} />
+                    </div>
+
+                ))}
 
               </Carousel>
 

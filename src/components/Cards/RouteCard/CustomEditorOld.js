@@ -44,9 +44,8 @@ class Editor extends React.Component {
       ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
       ['blockquote', 'code-block'],
 
-      [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [ { 'list': 'bullet' }],
+      [{ 'header': [1, 2, 3, false] }],
       [ 'link' ],          // add's image support
       [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
       [{ 'align': [] }],

@@ -24,7 +24,7 @@ class RouteCard extends Component {
 
       <div>
 
-        <Card style={{backgroundColor: 'rgba(255,255,255,0.5)'}}>
+        <Card style={{backgroundColor: 'rgba(255,255,255,0.5)', width : '350px' }}>
 
           <Card.Body style={{padding : 0}}>
               <CustomEditor index={index} onGeoChange={pageActions.onGeoChange} onTextChange={pageActions.updateText} data={editorState} />

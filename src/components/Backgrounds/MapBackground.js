@@ -27,7 +27,7 @@ class MapBackground extends Component {
       const renderer = that.browser.renderer;
 
       // that.browser.mapMobileModeAutodect = false;
-      //that.browser.mapMobileMode = true;
+      that.browser.mapMobileMode = false;
       /*that.browser.mapMobileTexelDegradation = 150;
       that.browser.rendererAntialiasing = false;
       that.browser.mapDownloadThreads = 3;
@@ -79,14 +79,14 @@ done = true;
 
   componentDidUpdate(prevProps) {
 
-    if (this.props.slideIndex !== prevProps.slideIndex) {
-      console.log("changed slidEIndex to " + this.props.slideIndex + " to " + prevProps.slideIndex)
+    console.log(prevProps.slideIndex);
+    console.log(prevProps.slideIndex);
+    console.log(prevProps.slideIndex);
 
-      this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, {
-        maxHeight: 1000,
-        maxDuration: 2000,
-        mode: 'direct'
-      });
+    if (prevProps.slideIndex ===0 && this.props.cards.length) {
+      this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
+    } else if (this.props.slideIndex !== prevProps.slideIndex) {
+      this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
 
       if (this.props.cards[this.props.slideIndex].cameraOptions.rotate) this.browser.autopilot.setAutorotate(-4);
 
