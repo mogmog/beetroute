@@ -52,7 +52,7 @@ class CardGrower extends Component {
 
     return (
 
-      <div className={styles.grower} style={{'verticalAlign':'bottom', minHeight : '250px', height: 'auto', padding : '5px'}}>
+      <div className={styles.grower} style={{'verticalAlign':'bottom', minHeight : '200px', height: 'auto', padding : '5px'}}>
 
         <Swipeable
         /*  onSwipedUp={this.swipedUp.bind(this)}*/

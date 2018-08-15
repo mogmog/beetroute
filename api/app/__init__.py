@@ -125,12 +125,17 @@ def create_app(config_name):
     @app.route('/api/real/cards/savecamera', methods=['POST'])
     def set_camera():
 
-      jsoncard = request.data.get('card')
-      jsoncamera = request.data.get('camera')
+      jsoncard    = request.data.get('card')
+      jsoncamera  = request.data.get('camera')
+      #data        = request.data.get('data')
 
       #fix
       card = Card.get_all().filter(Card.id.in_([jsoncard["id"]])).one()
-      card.camera = jsoncamera
+
+      card.data = jsoncard["data"]
+      if jsoncamera is not None: card.camera = jsoncamera
+
+
       card.save()
 
       cards = Card.get_all().filter(Card.component == 'TextCard').order_by(Card.id).all()
