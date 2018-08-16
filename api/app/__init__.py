@@ -14,10 +14,7 @@ import pprint
 from io import StringIO
 import dropbox
 import parser
-
-from shapely.geometry import shape, Point
-
-# local import
+import requests
 
 from instance.config import app_config
 
@@ -239,6 +236,18 @@ def create_app(config_name):
          results.append(card.serialise())
 
       return make_response(jsonify({ 'list' : results })), 200
+
+
+    @app.route('/api/real/instagram/media', methods=['POST'])
+    def get_media():
+
+      url = "https://api.instagram.com/v1/users/self/media/recent/?access_token=174821038.949cf9c.f6e4a526928e476894c22ed6c16e4bf7"
+
+      response = requests.get(url)
+
+      data = response.json()
+
+      return make_response(jsonify(data)), 200
 
     return app
 

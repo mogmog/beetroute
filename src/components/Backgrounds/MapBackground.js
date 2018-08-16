@@ -4,6 +4,8 @@ import _ from 'lodash';
 
 //const linePoints = db.coordinates;
 
+let pinModel, pinModelSelected;
+
 class MapBackground extends Component {
   constructor(props) {
     super(props);
@@ -35,6 +37,7 @@ class MapBackground extends Component {
       that.browser.mapTexelSizeFit = 0.2;*/
 
 
+      pinModelSelected = new window.ModelOBJ(map, renderer, { path:'/marker.obj' });
 
       map.addRenderSlot('custom-render', onCustomRender, true);
       map.moveRenderSlotAfter('after-map-render', 'custom-render');
@@ -45,15 +48,57 @@ class MapBackground extends Component {
         let done = false;
         const smaller = that.props.waypoints;
 
-        if (!done) {
+
+        that.props.cards.forEach((card, index) => {
+
+          if (pinModelSelected && pinModelSelected.ready) {
+
+            if (index === that.props.slideIndex) {
+              pinModelSelected.draw({
+                navCoords: [card.camera[1], card.camera[2], 128.5],
+                heightMode: 'float',
+                rotation: [0,0,0],
+                scale: [5,5,5],
+                ambientLight: [0,0,0]
+              });
+            } else {
+              pinModelSelected.draw({
+                navCoords: [card.camera[1], card.camera[2], 128.5],
+                heightMode: 'float',
+                rotation: [4,4,4],
+                ambientLight: [0,0,0]
+              });
+            }
+
+          }
+
+        });
+
+        // if (pinModelSelected && pinModelSelected.ready) {
+        //   pinModelSelected.draw({
+        //     navCoords: [1.4386666666666668, 38.90983333333333, 28.5],
+        //     heightMode: 'float',
+        //     rotation: [0,0,0],
+        //     scale: [500,500,500],
+        //     ambientLight: [90,90,90],
+        //   });
+        // }
+
+        // if (pinModel && pinModel.ready) {
+        //   pinModel.draw({
+        //     navCoords: [1.4386666666666668, 38.50983333333333, 28.5],
+        //     heightMode: 'float',
+        //     rotation: [0,0,0],
+        //     scale: [500,500,500],
+        //     ambientLight: [90,90,90],
+        //   });
+        // }
+
           var points = new Array(smaller.length);
 
           for (var i = 0; i < smaller.length; i++) {
             points[i] = map.convertCoordsFromNavToCanvas(smaller[i], 'float');
           }
-done = true;
-        }
-          //draw line
           renderer.drawLineString({
             points : points,
             size : 5.0,
@@ -79,10 +124,7 @@ done = true;
 
   componentDidUpdate(prevProps) {
 
-    console.log(prevProps.slideIndex);
-    console.log(prevProps.slideIndex);
-    console.log(prevProps.slideIndex);
-
+    //TODO line 82 is causing the bug where the first slide wont update
     if (prevProps.slideIndex ===0 && this.props.cards.length) {
       this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
     } else if (this.props.slideIndex !== prevProps.slideIndex) {

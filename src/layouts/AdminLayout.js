@@ -21,7 +21,8 @@ import ImageUploader from 'react-images-upload';
 
   return {
     card: namespaces.card,
-    gpstracking : namespaces.gpstracking
+    gpstracking : namespaces.gpstracking,
+    instagram : namespaces.instagram
   }
 })
 
@@ -57,6 +58,11 @@ export default class Admin extends Component {
       payload: {},
     });
 
+    dispatch({
+      type: 'instagram/fetch',
+      payload: {},
+    });
+
     setTimeout(() => {
       this.setState({
         data: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI'],
@@ -88,15 +94,23 @@ export default class Admin extends Component {
 
   }
 
+  /*this only updated the camera, not the position*/
   save() {
 
     const {dispatch} = this.props;
     const from = this.state.slideIndex;
 
     if (this.props.card.questioncards[this.state.selectedIndex] && this.state.position) {
+
+      const previouscamera = this.props.card.questioncards[this.state.selectedIndex].camera;
+
+      const newcamera = this.state.position;
+      newcamera[1] = previouscamera[1];
+      newcamera[2] = previouscamera[2];
+
        dispatch({
         type: 'card/updatequestioncard',
-        payload: {"card": this.props.card.questioncards[this.state.selectedIndex], camera: this.state.position},
+        payload: {"card": this.props.card.questioncards[this.state.selectedIndex], camera: newcamera },
       }).then((e) => {
 
         if (false && this.state.selectedIndex < this.props.card.questioncards.length -1) {
@@ -203,13 +217,12 @@ export default class Admin extends Component {
 
   render() {
 
-    const {card, gpstracking} = this.props;
+    const {card, gpstracking, instagram} = this.props;
     const {slideIndex, hasOpenCard, position } = this.state;
 
-    const waypoints = gpstracking.waypoints.map((x) => [x.longitude, x.latitude ]);
+    console.log(instagram);
 
-    console.log("rendering");
-    console.log(this.state.geohackmodal);
+    const waypoints = gpstracking.waypoints.map((x) => [x.longitude, x.latitude ]);
 
     const modal = <Modal visible={this.state.geohackmodal}>
                     <ImageUploader
@@ -226,7 +239,7 @@ export default class Admin extends Component {
       <div>
         <Flex wrap="wrap">
             <Button type={'primary'} onClick={this.save.bind(this)}>
-              SAVE
+              Save camera
             </Button>
         </Flex>
       </div>
@@ -273,7 +286,7 @@ export default class Admin extends Component {
 
                 {card.questioncards.map((card, index) => (
 
-                    <div style={{ verticalAlign: 'top', height: this.state.imgHeight }}>
+                    <div key={'div_' + index} style={{ verticalAlign: 'top', height: this.state.imgHeight }}>
                       <CardLoader pageActions={{updateText : this.updateText.bind(this), updateText : this.updateText.bind(this)}} data={card} extra={ extra } key={index} index={index} card={'RouteCard'} />
                     </div>
 
