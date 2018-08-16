@@ -1,29 +1,50 @@
 import React, {Component} from 'react';
-import {Card, WingBlank, WhiteSpace} from 'antd-mobile';
+import {SegmentedControl, Card, WingBlank, WhiteSpace, Modal, Carousel, Button} from 'antd-mobile';
+import {EditorState, convertFromRaw, convertToRaw} from 'draft-js'
+import CustomEditor from "./CustomEditorOld";
 
 class TextCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {modal: false};
+    this.state = { editorState: this.props.data.data, instagram: this.props.data.instagram };
+
+  }
+
+  onChange(editorState) {
+    this.setState({editorState})
   }
 
   render() {
 
-    const {data, onClick, extra, clickevents, index} = this.props;
+    const { pageActions, index, data } = this.props;
 
-    const {modal} = this.state;
+    const {editorState, instagram} = this.state;
+
+    const  toolbarOptions = [
+      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+      ['blockquote', 'code-block'],
+
+      [ { 'list': 'bullet' }],
+      [{ 'header': [1, 2, 3, false] }],
+      [ 'link' ],          // add's image support
+      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+      [{ 'align': [] }],
+    ];
 
     return (
 
-      <Card>
-        <Card.Body>
+      <div>
 
-          {index === 56 && <div><h1>done for the day</h1> <h1 style={{fontSize : '96pt'}}> 🍺 </h1></div>}
+        <Card style={{backgroundColor: 'rgba(255,255,255,0.7)' }}>
 
-          {index === 57 && <div><h1>tomorrows climb</h1></div>}
+          <Card.Body style={{'paddingTop' : '20px', height : '57vh', 'textAlign' :'center'}}>
+              <div>
+              <CustomEditor toolbarOptions={toolbarOptions} index={index} onTextChange={pageActions.updateText} data={editorState} />
+              </div>
+          </Card.Body>
+        </Card>
 
-        </Card.Body>
-      </Card>);
+      </div>);
   }
 }
 

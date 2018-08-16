@@ -38,22 +38,13 @@ class Editor extends React.Component {
 
   componentDidMount() {
 
-    const { onTextChange, index } = this.props;
+    const { onTextChange, index, toolbarOptions } = this.props;
 
-    var toolbarOptions = [
-      ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-      ['blockquote', 'code-block'],
 
-      [ { 'list': 'bullet' }],
-      [{ 'header': [1, 2, 3, false] }],
-      [ 'link' ],          // add's image support
-      [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-      [{ 'align': [] }],
-    ];
 
     var quill = new Quill(this.editor, {
       modules: {
-        toolbar: false
+        toolbar: toolbarOptions,
       },
       placeholder: '...',
       theme: 'snow',
@@ -65,7 +56,7 @@ class Editor extends React.Component {
 
     quill.setContents(this.props.data);
 
-    quill.focus();
+    //quill.focus();
 
   }
 
@@ -80,4 +71,5 @@ class Editor extends React.Component {
   }
 }
 
+Editor.defaultProps = { toolbarOptions : false }
 export default Editor;

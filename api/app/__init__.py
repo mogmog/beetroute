@@ -6,6 +6,7 @@ import random
 from flask_api import FlaskAPI, status
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, Text, Integer
+from sqlalchemy import or_
 from flask import request, jsonify, abort, make_response
 from shapely.geometry import shape, Point
 from sqlalchemy import text
@@ -135,7 +136,7 @@ def create_app(config_name):
 
       card.save()
 
-      cards = Card.get_all().filter(Card.component == 'TextCard').order_by(Card.id).all()
+      cards = Card.get_all().filter(or_(Card.component == 'TextCard', Card.component == 'InstagramCard')).order_by(Card.id).all()
 
       results = []
       for card in cards:
@@ -212,7 +213,9 @@ def create_app(config_name):
       #    cardids.append(row[0])
 
       #cards = Card.get_all().filter(Card.id.in_(cardids)).all()
-      cards = Card.get_all().filter(Card.component == 'TextCard').order_by(Card.id).all()
+      cards = Card.get_all().filter(or_(Card.component == 'TextCard', Card.component == 'InstagramCard')).order_by(Card.id).all()
+
+
 
       results = []
       for card in cards:
@@ -230,7 +233,7 @@ def create_app(config_name):
 
       Card(component, {}, {}, marker, camera, cameraOptions, {} ).save()
 
-      cards = Card.get_all().filter(Card.component == 'TextCard').order_by(Card.id).all()
+      cards = Card.get_all().filter(or_(Card.component == 'TextCard', Card.component == 'InstagramCard')).order_by(Card.id).all()
 
       results = []
       for card in cards:

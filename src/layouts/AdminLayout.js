@@ -7,16 +7,16 @@ import { HtmlEditor, MenuBar  } from '@aeaton/react-prosemirror'
 import {Flex, Carousel, Icon, Modal, Button, WhiteSpace, WingBlank, TabBar } from 'antd-mobile';
 import { PullToRefresh, ListView  , Popover, NavBar} from 'antd-mobile';
 
-const Item = Popover.Item;
-
 import CardLoader from "../components/CardLoader/CardLoader";
 import MapBackground from "../components/Backgrounds/MapBackground";
-import GeoLocate from '../components/Cards/RouteCard/geolocate';
+import GeoLocate from '../components/Cards/TextCard/geolocate';
 import styles from './AdminLayout.less';
 
 import {EXIF} from 'exif-js';
 import ImageUploader from 'react-images-upload';
 import InstagramChooser from "../components/Instagram/InstagramChooser";
+
+const Item = Popover.Item;
 
 @connect((namespaces) => {
 
@@ -28,23 +28,24 @@ import InstagramChooser from "../components/Instagram/InstagramChooser";
 })
 
 
-
-
 export default class Admin extends Component {
 
   showSave = false;
 
   dropCount = 0;
 
-  state = {
-    data: ['1', '2', '3'],
-    imgHeight: 440,
-    hasOpenCard : false,
-    selectedIndex : 0,
-    position : undefined,
-    slideIndex: 0,
-    geohackmodal : false,
-    instagrammodal : false,
+  constructor() {
+    super();
+
+    this.state = {
+      imgHeight: 440,
+      hasOpenCard : false,
+      selectedIndex : 0,
+      position : undefined,
+      slideIndex: 0,
+      geohackmodal : false,
+      instagrammodal : false,
+    };
   }
 
   componentDidMount() {
@@ -294,6 +295,9 @@ export default class Admin extends Component {
 
           {/*      add this back when camera needs to update cards (if that is a good pattern)  {onCameraChange={this.onCameraChange.bind(this)}}*/}
 
+          {/*TODO friday - make the whole carasol swipable down to expose the map. maybe auto rotate*/}
+
+
           <MapBackground onCameraChange={this.onCameraChange.bind(this)} position={position} slideIndex={this.state.selectedIndex} cards={card.questioncards} waypoints={waypoints}>
             { <div className={styles.children}>
 
@@ -302,8 +306,6 @@ export default class Admin extends Component {
                 slideWidth={0.9}
                 cellSpacing={10}
                 selectedIndex={this.state.selectedIndex}
-                dragging={!hasOpenCard}
-                swiping={!hasOpenCard}
 
                 beforeChange={(from, to)=> {
                   this.setState({selectedIndex: (to)});
@@ -312,8 +314,8 @@ export default class Admin extends Component {
 
                 {card.questioncards.map((card, index) => (
 
-                    <div key={'div_' + index} style={{ verticalAlign: 'top', height: this.state.imgHeight }}>
-                      <CardLoader pageActions={{addInstagram : this.addInstagram.bind(this), updateText : this.updateText.bind(this)}} data={card} extra={ extra } key={index} index={index} card={'RouteCard'} />
+                    <div key={'div_' + index} style={{height: this.state.imgHeight }}>
+                      <CardLoader pageActions={{addInstagram : this.addInstagram.bind(this), updateText : this.updateText.bind(this)}} data={card} extra={ extra } key={index} index={index} card={card.component} />
                     </div>
 
                 ))}

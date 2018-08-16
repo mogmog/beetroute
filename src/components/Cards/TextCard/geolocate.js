@@ -35,7 +35,8 @@ class GeoLocate extends React.Component {
                              overlayStyle={{color: 'currentColor'}}
                              visible={this.state.visible}
                              overlay={[
-                               (<Item key="TextCard" value="TextCard" icon={myImg('tOtXhkIWzwotgGSeptou')} data-seed="logId">Add Card</Item>),
+                               (<Item key="TextCard"      value="TextCard" icon={myImg('tOtXhkIWzwotgGSeptou')} data-seed="logId">Add Text  </Item>),
+                               (<Item key="InstagramCard" value="InstagramCard" icon={myImg('tOtXhkIWzwotgGSeptou')} data-seed="logId">Add Instagram </Item>),
                              ]}
                              align={{
                                overflow: {adjustY: 0, adjustX: 0},
