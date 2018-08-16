@@ -273,7 +273,7 @@ export default class Admin extends Component {
 
                 {card.questioncards.map((card, index) => (
 
-                    <div style={{ width: '100%', verticalAlign: 'top', height: this.state.imgHeight }}>
+                    <div style={{ verticalAlign: 'top', height: this.state.imgHeight }}>
                       <CardLoader pageActions={{updateText : this.updateText.bind(this), updateText : this.updateText.bind(this)}} data={card} extra={ extra } key={index} index={index} card={'RouteCard'} />
                     </div>
 

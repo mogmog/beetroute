@@ -38,10 +38,7 @@ class CardLoader extends Component {
     if (!DynamicCard) return <span>No card defined in card loader</span>;
 
     return (
-      <div >
-        <CardGrower card={  <DynamicCard index={index} pageActions={this.props.pageActions} data={this.props.data} clickevents={clickevents} extra={extra}  />}>
-        </CardGrower>
-      </div>
+      <DynamicCard index={index} pageActions={this.props.pageActions} data={this.props.data} clickevents={clickevents} extra={extra}  />
     );
   }
 }
