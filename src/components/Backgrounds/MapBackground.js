@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import styles from './styles.css';
-import _ from 'lodash';
 
-//const linePoints = db.coordinates;
-
-let pinModel, pinModelSelected;
+let pinModelUnSelected, pinModelSelected;
 
 class MapBackground extends Component {
   constructor(props) {
@@ -38,10 +35,10 @@ class MapBackground extends Component {
 
 
       pinModelSelected = new window.ModelOBJ(map, renderer, { path:'/marker.obj' });
+      pinModelUnSelected = new window.ModelOBJ(map, renderer, { path:'/transparent_marker.obj' });
 
       map.addRenderSlot('custom-render', onCustomRender, true);
       map.moveRenderSlotAfter('after-map-render', 'custom-render');
-
 
       function onCustomRender() {
 
@@ -51,7 +48,7 @@ class MapBackground extends Component {
 
         that.props.cards.forEach((card, index) => {
 
-          if (pinModelSelected && pinModelSelected.ready) {
+          if (pinModelSelected && pinModelSelected.ready && pinModelUnSelected && pinModelUnSelected.ready) {
 
             if (index === that.props.slideIndex) {
               pinModelSelected.draw({
@@ -62,10 +59,11 @@ class MapBackground extends Component {
                 ambientLight: [0,0,0]
               });
             } else {
-              pinModelSelected.draw({
+              pinModelUnSelected.draw({
                 navCoords: [card.marker[1], card.marker[2], 128.5],
                 heightMode: 'float',
-                rotation: [4,4,4],
+                rotation: [0,0,0],
+                scale: [5,5,5],
                 ambientLight: [0,0,0]
               });
             }
