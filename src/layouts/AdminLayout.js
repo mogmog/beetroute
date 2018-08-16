@@ -16,6 +16,7 @@ import styles from './AdminLayout.less';
 
 import {EXIF} from 'exif-js';
 import ImageUploader from 'react-images-upload';
+import InstagramChooser from "../components/Instagram/InstagramChooser";
 
 @connect((namespaces) => {
 
@@ -37,12 +38,13 @@ export default class Admin extends Component {
 
   state = {
     data: ['1', '2', '3'],
-    imgHeight: 350,
+    imgHeight: 440,
     hasOpenCard : false,
     selectedIndex : 0,
     position : undefined,
     slideIndex: 0,
     geohackmodal : false,
+    instagrammodal : false,
   }
 
   componentDidMount() {
@@ -105,8 +107,8 @@ export default class Admin extends Component {
       const previouscamera = this.props.card.questioncards[this.state.selectedIndex].camera;
 
       const newcamera = this.state.position;
-      newcamera[1] = previouscamera[1];
-      newcamera[2] = previouscamera[2];
+      //newcamera[1] = previouscamera[1];
+      //newcamera[2] = previouscamera[2];
 
        dispatch({
         type: 'card/updatequestioncard',
@@ -118,6 +120,25 @@ export default class Admin extends Component {
         }
        })
     }
+  }
+
+  /*this only updated the camera, not the position*/
+  onInstagramSelect(instagram) {
+
+    const {dispatch} = this.props;
+
+    dispatch({
+      type: 'card/updatequestioncard',
+      payload: {"card": this.props.card.questioncards[this.state.selectedIndex], instagram: instagram },
+    })
+
+    this.setState({instagrammodal : false});
+
+
+  }
+
+  addInstagram() {
+    this.setState({instagrammodal : true});
   }
 
 
@@ -137,14 +158,14 @@ export default class Admin extends Component {
 
       const defaultCameraOptions = {
         maxHeight: 1000,
-        maxDuration: 2000,
+        maxDuration: 1500,
         mode: 'direct',
         rotate : false,
       };
 
       dispatch({
         type: 'card/createquestioncard',
-        payload: {component, camera : camera, cameraOptions : defaultCameraOptions },
+        payload: {component, marker: camera, camera : camera, cameraOptions : defaultCameraOptions },
       }).then(()=> {
         this.setState({selectedIndex : this.state.selectedIndex + 1});
       })
@@ -220,11 +241,11 @@ export default class Admin extends Component {
     const {card, gpstracking, instagram} = this.props;
     const {slideIndex, hasOpenCard, position } = this.state;
 
-    console.log(instagram);
+    console.log(card);
 
     const waypoints = gpstracking.waypoints.map((x) => [x.longitude, x.latitude ]);
 
-    const modal = <Modal visible={this.state.geohackmodal}>
+    const geohackmodal = <Modal visible={this.state.geohackmodal}>
                     <ImageUploader
                       withIcon={true}
                       buttonText='Set lat/long from camera'
@@ -233,6 +254,11 @@ export default class Admin extends Component {
                       maxFileSize={25242880}
                     />
                   </Modal>
+
+    const instagrammodal = <Modal visible={this.state.instagrammodal}>
+      <InstagramChooser onSelect={this.onInstagramSelect.bind(this)} data={instagram.instagram.data}></InstagramChooser>
+    </Modal>
+
 
     const extra = (
 
@@ -287,14 +313,16 @@ export default class Admin extends Component {
                 {card.questioncards.map((card, index) => (
 
                     <div key={'div_' + index} style={{ verticalAlign: 'top', height: this.state.imgHeight }}>
-                      <CardLoader pageActions={{updateText : this.updateText.bind(this), updateText : this.updateText.bind(this)}} data={card} extra={ extra } key={index} index={index} card={'RouteCard'} />
+                      <CardLoader pageActions={{addInstagram : this.addInstagram.bind(this), updateText : this.updateText.bind(this)}} data={card} extra={ extra } key={index} index={index} card={'RouteCard'} />
                     </div>
 
                 ))}
 
               </Carousel>
 
-              {modal}
+              {geohackmodal}
+
+              {instagrammodal}
 
             </div>}
 

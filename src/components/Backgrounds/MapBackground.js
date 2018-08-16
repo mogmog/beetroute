@@ -55,7 +55,7 @@ class MapBackground extends Component {
 
             if (index === that.props.slideIndex) {
               pinModelSelected.draw({
-                navCoords: [card.camera[1], card.camera[2], 128.5],
+                navCoords: [card.marker[1], card.marker[2], 128.5],
                 heightMode: 'float',
                 rotation: [0,0,0],
                 scale: [5,5,5],
@@ -63,7 +63,7 @@ class MapBackground extends Component {
               });
             } else {
               pinModelSelected.draw({
-                navCoords: [card.camera[1], card.camera[2], 128.5],
+                navCoords: [card.marker[1], card.marker[2], 128.5],
                 heightMode: 'float',
                 rotation: [4,4,4],
                 ambientLight: [0,0,0]
@@ -94,19 +94,19 @@ class MapBackground extends Component {
         //   });
         // }
 
-          var points = new Array(smaller.length);
-
-          for (var i = 0; i < smaller.length; i++) {
-            points[i] = map.convertCoordsFromNavToCanvas(smaller[i], 'float');
-          }
-          renderer.drawLineString({
-            points : points,
-            size : 5.0,
-            color : [248,222,126, 125],
-            depthTest : true,
-            depthOffset : [0,0,-7],
-            blend : true
-          });
+          // var points = new Array(smaller.length);
+          //
+          // for (var i = 0; i < smaller.length; i++) {
+          //   points[i] = map.convertCoordsFromNavToCanvas(smaller[i], 'float');
+          // }
+          // renderer.drawLineString({
+          //   points : points,
+          //   size : 5.0,
+          //   color : [248,222,126, 125],
+          //   depthTest : true,
+          //   depthOffset : [0,0,-7],
+          //   blend : true
+          // });
       }
     }
 
@@ -124,15 +124,19 @@ class MapBackground extends Component {
 
   componentDidUpdate(prevProps) {
 
-    //TODO line 82 is causing the bug where the first slide wont update
-    if (prevProps.slideIndex ===0 && this.props.cards.length) {
-      this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
-    } else if (this.props.slideIndex !== prevProps.slideIndex) {
-      this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
+    if (this.props.cards.length && this.props.cards[this.props.slideIndex] && this.props.cards[this.props.slideIndex].camera) {
 
-      if (this.props.cards[this.props.slideIndex].cameraOptions.rotate) this.browser.autopilot.setAutorotate(-4);
+      //TODO next line is causing the bug where the first slide wont update
+      if (prevProps.slideIndex ===0 ) {
+        this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
+      } else if (this.props.slideIndex !== prevProps.slideIndex) {
+        this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
 
+        if (this.props.cards[this.props.slideIndex].cameraOptions.rotate) this.browser.autopilot.setAutorotate(-4);
+      }
     }
+
+
 
   }
 

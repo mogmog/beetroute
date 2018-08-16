@@ -53,7 +53,7 @@ class Editor extends React.Component {
 
     var quill = new Quill(this.editor, {
       modules: {
-        toolbar: toolbarOptions
+        toolbar: false
       },
       placeholder: '...',
       theme: 'snow',
@@ -73,8 +73,8 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <div className={styles.customeditor}>
-        <div ref={editor => this.editor = editor} id="test" ></div>
+      <div className={styles.customeditor }>
+        <div ref={editor => this.editor = editor} id="test"  ></div>
       </div>
     );
   }

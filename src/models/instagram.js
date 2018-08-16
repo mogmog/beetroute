@@ -10,7 +10,6 @@ export default {
   effects: {
 
     *fetch({payload}, {call, put}) {
-      alert("fetchinstagram");
       const response = yield call(queryInstagram, payload);
       yield put({
         type: 'savefetch',
