@@ -15,7 +15,6 @@ Flask-Bcrypt==0.7.1
 Flask-Migrate==2.0.3
 Flask-Script==2.0.5
 Flask-SQLAlchemy==2.2
-functools32==3.2.3.post2
 html5lib==1.0.1
 httplib2==0.11.3
 idna==2.7

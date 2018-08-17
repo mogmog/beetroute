@@ -24,12 +24,6 @@ git clone https://github.com/mogmog/beetroute.git
       
         $ pip install -r requirements.txt
         ```
-
-* #### Environment Variables (start.sh does this for you)
-    ```
-    export APP_SETTINGS="development"
-    export DATABASE_URL="postgresql://postgres:postgres@localhost/tracker"
-    ```
     
   ### To create the database
   
