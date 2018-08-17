@@ -18,14 +18,14 @@ class CardLoader extends Component {
 
   render() {
 
-    const {extra, index, card, pageActions, data, clickevents} = this.props;
+    const {extra, index, card, pageActions, data, clickevents, isAdmin} = this.props;
 
     const DynamicCard = mappings[card];
 
     if (!DynamicCard) return <span>No card defined in card loader</span>;
 
     return (
-      <DynamicCard index={index} pageActions={ pageActions } data={ data } clickevents={clickevents} extra={extra}  />
+      <DynamicCard isAdmin={isAdmin} index={index} pageActions={ pageActions } data={ data } clickevents={clickevents} extra={extra}  />
     );
   }
 }

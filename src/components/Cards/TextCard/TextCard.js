@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {SegmentedControl, Card, WingBlank, WhiteSpace, Modal, Carousel, Button} from 'antd-mobile';
 import {EditorState, convertFromRaw, convertToRaw} from 'draft-js'
-import CustomEditor from "./CustomEditorOld";
+import CustomEditor from "./CustomEditor";
 
 class TextCard extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class TextCard extends Component {
 
   render() {
 
-    const { pageActions, index, data } = this.props;
+    const { pageActions, index, data, isAdmin } = this.props;
 
     const {editorState, instagram} = this.state;
 
@@ -39,7 +39,7 @@ class TextCard extends Component {
 
           <Card.Body style={{'paddingTop' : '20px', height : '57vh', 'textAlign' :'center'}}>
               <div>
-              <CustomEditor toolbarOptions={toolbarOptions} index={index} onTextChange={pageActions.updateText} data={editorState} />
+              <CustomEditor isAdmin={isAdmin} toolbarOptions={isAdmin ? toolbarOptions : false } index={index} onTextChange={pageActions.updateText} data={editorState} />
               </div>
           </Card.Body>
         </Card>

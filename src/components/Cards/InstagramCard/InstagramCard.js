@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Card, Button } from 'antd-mobile';
-import CustomEditor from "./../TextCard/CustomEditorOld";
+import CustomEditor from "./../TextCard/CustomEditor";
 
 class InstagramCard extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class InstagramCard extends Component {
 
   render() {
 
-    const { pageActions, index, data } = this.props;
+    const { pageActions, index, data, isAdmin } = this.props;
 
     const {editorState } = this.state;
 
@@ -31,7 +31,7 @@ class InstagramCard extends Component {
             { data.instagram && <img style={{ opacity : 0.8, width : '96%', height : 'auto'}} alt="something" src={data.instagram.images.standard_resolution.url} />}
 
             <div style={{height : '10%' }}>
-              <CustomEditor index={index} onTextChange={pageActions.updateText} data={editorState} />
+              <CustomEditor isAdmin={isAdmin} index={index} onTextChange={pageActions.updateText} data={editorState} />
             </div>
           </Card.Body>
         </Card>

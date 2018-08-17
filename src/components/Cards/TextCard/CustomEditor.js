@@ -1,67 +1,76 @@
-import React, { Component } from 'react';
-import ReactQuill from 'react-quill'; // ES6
-import PropTypes from 'prop-types';
-import GeoLocate from './geolocate';
+import React from "react";
+import Quill from 'quill';
+import styles from './CustomEditor.less';
+import { Button, Modal } from 'antd-mobile';
+import {EXIF} from 'exif-js';
+import ImageUploader from 'react-images-upload';
 
-export default class CustomEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { editorHtml:  { ops: [ { insert: '  ' } ]
-      } };
+function getExif() {
+  var img1 = document.getElementById("img1");
+  EXIF.getData(img1, function() {
+    var make = EXIF.getTag(this, "Make");
+    var model = EXIF.getTag(this, "Model");
+    var makeAndModel = document.getElementById("makeAndModel");
+    makeAndModel.innerHTML = `${make} ${model}`;
+  });
+  var img2 = document.getElementById("img2");
+  EXIF.getData(img2, function() {
+    var allMetaData = EXIF.getAllTags(this);
+    var allMetaDataSpan = document.getElementById("allMetaDataSpan");
+    allMetaDataSpan.innerHTML = JSON.stringify(allMetaData, null, "\t");
+  });
+  var img3 = document.getElementById("img3");
+  // EXIF.enableXmp();
+  EXIF.getData(img3, function() {
+    var allMetaData = EXIF.getAllTags(this);
+    var img3WithXmpMetaData = document.getElementById("img3WithXmpMetaData");
+    img3WithXmpMetaData.innerHTML = JSON.stringify(allMetaData, null, "\t");
+  });
+}
+
+class Editor extends React.Component {
+  constructor() {
+    super();
+    this.editor = null;
+
+    this.state = { };
   }
 
-  handleChange(html) {
-    this.setState({ editorHtml: html });
-    console.log(html);
+  componentDidMount() {
+
+    const { onTextChange, index, toolbarOptions, isAdmin } = this.props;
+
+
+
+    var quill = new Quill(this.editor, {
+      readOnly: !isAdmin,
+      modules: {
+        toolbar: toolbarOptions,
+      },
+      placeholder: '...',
+      theme: 'snow',
+    });
+
+    quill.on('text-change', function() {
+      onTextChange(index, quill.getContents());
+    });
+
+    quill.setContents(this.props.data);
+
+    //quill.focus();
+
   }
+
+
 
   render() {
     return (
-      <div className="text-editor">
-
-          <ReactQuill
-            id={'quill_' + this.props.data.id}
-            value={this.state.editorHtml}
-            onChange={this.handleChange.bind(this)}
-            modules={CustomEditor.modules}
-            formats={CustomEditor.formats}
-            theme={"snow"} // pass false to use minimal theme
-          />
-
+      <div className={styles.customeditor }>
+        <div ref={editor => this.editor = editor} id="test"  ></div>
       </div>
     );
   }
 }
 
-/*
- * Quill modules to attach to editor
- * See https://quilljs.com/docs/modules/ for complete options
- */
-// CustomEditor.modules = {
-//   toolbar: {
-//     container: "#toolbar",
-//   }
-// };
-
-/*
- * Quill editor formats
- * See https://quilljs.com/docs/formats/
- */
-CustomEditor.formats = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "list",
-  "bullet",
-  "link",
-  "image",
-  "color"
-];
-
-/*
- * PropType validation
- */
-CustomEditor.propTypes = {
-  placeholder: PropTypes.string
-};
+Editor.defaultProps = { toolbarOptions : false }
+export default Editor;

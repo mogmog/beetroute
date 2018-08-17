@@ -144,7 +144,7 @@ class MapBackground extends Component {
     return (
 
       <div className={styles.wrapper}>
-        <div ref={(e) => this.map = e} style={{'height': '100vh'}}></div>
+        <div ref={(e) => this.map = e} style={{'height': '100vh', 'width': '100vw'}}></div>
         {children}
       </div>);
   }
