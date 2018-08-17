@@ -48,6 +48,7 @@ export default class Admin extends Component {
       selectedIndex: parseInt(localStorage.getItem("selectedIndex")) || 0,
       geohackmodal: false,
       instagrammodal: false,
+      cardtype: '',
     };
   }
 
@@ -215,8 +216,7 @@ export default class Admin extends Component {
             var longitude = exifLong[0] + (((exifLong[1] * 60) + exifLong[2]) / 3600);
           }
 
-
-          that.addCard(that.state.instagrammodal ? "InstagramCard" : "TextCard", {longitude: longitude, latitude: latitude});
+          that.addCard(that.state.cardtype, {longitude: longitude, latitude: latitude});
 
 
         } else {
@@ -249,6 +249,10 @@ export default class Admin extends Component {
 
   swipedUp() {
     this.setState({cardsUp: true});
+  }
+
+  setCardType(type) {
+    this.setState({cardtype: type});
   }
 
   render() {
@@ -307,7 +311,7 @@ export default class Admin extends Component {
                 <Button style={{padding : 0}} type={'primary'} onClick={this.save.bind(this)}> Save </Button>
               }
               rightContent={
-                <GeoLocate showModal={this.showModal.bind(this)} addCard={this.addCard.bind(this)}/>
+                <GeoLocate setCardType={this.setCardType.bind(this)} showModal={this.showModal.bind(this)} addCard={this.addCard.bind(this)}/>
               }
             >
 

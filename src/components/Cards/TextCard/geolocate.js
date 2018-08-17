@@ -45,6 +45,8 @@ class GeoLocate extends React.Component {
                              onVisibleChange={this.handleVisibleChange.bind(this)}
                              onSelect={(opt) => {
 
+                               this.props.setCardType(opt.props.value);
+
                                if (this.props.isGeolocationEnabled) {
                                  this.onSelect(opt, this.props.coords);
                                } else {
