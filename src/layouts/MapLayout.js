@@ -42,12 +42,10 @@ export default class Admin extends Component {
     super();
 
     this.state = {
-      imgHeight: 420,
+      imgHeight: 410,
       hasOpenCard: false,
       cardsUp: true,
-      selectedIndex: 0,
-      position: undefined,
-      slideIndex: 0,
+      selectedIndex: parseInt(localStorage.getItem("selectedIndex")) || 0,
       geohackmodal: false,
       instagrammodal: false,
     };
@@ -330,6 +328,7 @@ export default class Admin extends Component {
                         selectedIndex={this.state.selectedIndex}
 
                         beforeChange={(from, to) => {
+                          localStorage.setItem("selectedIndex", to);
                           this.setState({selectedIndex: (to)});
                         }}
                       >
