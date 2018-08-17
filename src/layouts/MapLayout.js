@@ -62,7 +62,7 @@ export default class Admin extends Component {
       type: 'card/fetchquestioncards',
       payload: {userId: 1, type: 'daycard'},
     }).then((e) => {
-      this.setState({selectedIndex : parseInt(localStorage.getItem('selectedIndex') || 0)})
+      this.setState({selectedIndex : parseInt(localStorage.getItem('selectedIndex')) || 0})
     });
 
     dispatch({

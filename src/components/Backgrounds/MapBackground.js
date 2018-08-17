@@ -130,41 +130,13 @@ class MapBackground extends Component {
 
 if (this.props.cards[this.props.slideIndex] !== undefined) {
 
-  /*/!*If card is moving up, move map north*!/
-  if (!prevProps.cardsUp && this.props.cardsUp) {
-
-    const atZero = (this.browser.map.getHitCoords(0, 0, 'fix'));
-    const atOneHundred = (this.browser.map.getHitCoords(0, 200, 'fix'));
-
-    const adjustedCamera = this.props.cards[this.props.slideIndex].camera;
-
-    adjustedCamera[2] = adjustedCamera[2] - (atZero[1] - atOneHundred[1]);
-
-    this.browser.autopilot.flyTrajectory([this.props.cards[this.props.slideIndex].camera, adjustedCamera], {maxDuration : 4500});
-  }
-
-  /!*If card is moving down, move map south*!/
-  if (prevProps.cardsUp && !this.props.cardsUp) {
-    const atZero = (this.browser.map.getHitCoords(0, 0, 'fix'));
-    const atOneHundred = (this.browser.map.getHitCoords(0, 200, 'fix'));
-
-    const adjustedCamera = this.props.cards[this.props.slideIndex].camera;
-
-    adjustedCamera[2] = adjustedCamera[2] + (atZero[1] - atOneHundred[1]);
-
-    this.browser.autopilot.flyTrajectory([this.props.cards[this.props.slideIndex].camera, adjustedCamera], {maxDuration : 4500});
-  }*/
 
 
   //TODO next line is causing the bug where the first slide wont update
- // if (this.props.slideIndex !== prevProps.slideIndex) {
+  if (this.props.slideIndex !== prevProps.slideIndex) {
     this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
-
     if (this.props.cards[this.props.slideIndex].cameraOptions.rotate) this.browser.autopilot.setAutorotate(-4);
- // } else {
-
-
-  //}
+  }
 
 }
 
