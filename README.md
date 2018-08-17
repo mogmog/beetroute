@@ -33,8 +33,8 @@ git clone https://github.com/mogmog/beetroute.git
   sudo -u postgres psql
   From the resulting prompt:
   
-  ALTER USER postgres PASSWORD 'postgres';
-  CREATE DATABASE tracker;
+  ALTER USER postgres PASSWORD 'postgresGeorgianSoupe45435';
+  CREATE DATABASE beatroute;
    
   (control d to exit)
   
@@ -56,7 +56,7 @@ git clone https://github.com/mogmog/beetroute.git
      
        source env/bin/activate
        export APP_SETTINGS="development"
-       export DATABASE_URL="postgresql://postgres:postgres@localhost/tracker"
+       export DATABASE_URL="postgresql://postgres:postgresGeorgianSoupe45435@localhost/beatroute"
          
  
     ```
@@ -70,21 +70,6 @@ git clone https://github.com/mogmog/beetroute.git
     (env)$ python manage.py db upgrade
     ```
 
-
-### Populate DB
-
-- `psql -U postgres -d tracker -a -f api/sql/tracker_public_country.sql -h localhost`
--  `psql -U postgres -d tracker -a -f api/sql/tracker_public_user.sql -h localhost`
-- `psql -U postgres -d tracker -a -f api/sql/tracker_public_userXCountry.sql -h localhost`
-- `psql -U postgres -d tracker -a -f api/sql/tracker_public_content.sql -h localhost`
-
-
-### edit database
-
-psql -U postgres -d tracker -h localhost
-
-SELECT * from cards 
-````start.sh````
 
 ### tmux help
 
