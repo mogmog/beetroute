@@ -1,99 +1,108 @@
-English | [简体中文](./README.zh-CN.md)
+English 
 
-# Ant Design Pro
+#### install git and tmux
 
-[![](https://img.shields.io/travis/ant-design/ant-design-pro/master.svg?style=flat-square)](https://travis-ci.org/ant-design/ant-design-pro)
-[![Build status](https://ci.appveyor.com/api/projects/status/67fxu2by3ibvqtat/branch/master?svg=true)](https://ci.appveyor.com/project/afc163/ant-design-pro/branch/master)
-[![Dependencies](https://img.shields.io/david/ant-design/ant-design-pro.svg)](https://david-dm.org/ant-design/ant-design-pro)
-[![DevDependencies](https://img.shields.io/david/dev/ant-design/ant-design-pro.svg)](https://david-dm.org/ant-design/ant-design-pro#info=devDependencies&view=list)
-[![Gitter](https://badges.gitter.im/ant-design/ant-design-pro.svg)](https://gitter.im/ant-design/ant-design-pro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+sudo apt-get install git tmux
 
-An out-of-box UI solution for enterprise applications as a React boilerplate.
+#### get repo
 
-![](https://gw.alipayobjects.com/zos/rmsportal/xEdBqwSzvoSapmnSnYjU.png)
+````
+git clone https://github.com/mogmog/beetroute.git
+````
 
-- Preview: http://preview.pro.ant.design
-- Home Page: http://pro.ant.design
-- Documentation: http://pro.ant.design/docs/getting-started
-- ChangeLog: http://pro.ant.design/docs/changelog
-- FAQ: http://pro.ant.design/docs/faq
-- Mirror Site in China: http://ant-design-pro.gitee.io
+####Get Python
+        ```
+        $ sudo apt-get install python-virtualenv
+        $ sudo apt-get install python3-pip
+        $ sudo apt-get install python3-setuptools
+        $ sudo easy_install3 pip
+        
+        $cd beetroute
+        $ cd api
+        $ virtualenv -p python3 env
+        $ source env/bin/activate
+      
+        $ pip install -r requirements.txt
+        ```
 
-## Translation Recruitment :loudspeaker:
+* #### Environment Variables (start.sh does this for you)
+    ```
+    export APP_SETTINGS="development"
+    export DATABASE_URL="postgresql://postgres:postgres@localhost/tracker"
+    ```
+    
+  ### To create the database
+  
+  sudo apt-get install postgresql postgresql-contrib
+  
+  
+  sudo -u postgres psql
+  From the resulting prompt:
+  
+  ALTER USER postgres PASSWORD 'postgres';
+  CREATE DATABASE tracker;
+   
+  (control d to exit)
+  
+    
+  ### Install Node
+  
+  curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+  sudo apt-get install -y nodejs
+  
+  
+  ### Install js requirements
+  cd ..
+  npm install
+  
 
-We need your help: https://github.com/ant-design/ant-design-pro/issues/120
+ #### Build database
+ 
+     (Remember to be in the virtualenvironment and have set the environment variables)
+     
+       source env/bin/activate
+       export APP_SETTINGS="development"
+       export DATABASE_URL="postgresql://postgres:postgres@localhost/tracker"
+         
+ 
+    ```
+    (env)$ python manage.py db init
 
-## Features
+    (env)$ python manage.py db migrate
+    ```
 
-- :gem: **Neat Design**: Follow [Ant Design specification](http://ant.design/)
-- :triangular_ruler: **Common Templates**: Typical templates for enterprise applications
-- :rocket: **State of The Art Development**: Newest development stack of React/dva/antd
-- :iphone: **Responsive**: Designed for variable screen sizes
-- :art: **Theming**: Customizable theme with simple config
-- :globe_with_meridians: **International**: Built-in i18n solution
-- :gear: **Best Practices**: Solid workflow to make your code healthy
-- :1234: **Mock development**: Easy to use mock development solution
-- :white_check_mark: **UI Test**: Fly safely with unit and e2e tests
+    And finally, migrate your migrations to persist on the DB
+    ```
+    (env)$ python manage.py db upgrade
+    ```
 
-## Templates
 
-```
-- Dashboard
-  - Analytic
-  - Monitor
-  - Workspace
-- Form
-  - Basic Form
-  - Step Form
-  - Advanced From
-- List
-  - Standard Table
-  - Standard List
-  - Card List
-  - Search List (Project/Applications/Article)
-- Profile
-  - Simple Profile
-  - Advanced Profile
-- Result
-  - Success
-  - Failed
-- Exception
-  - 403
-  - 404
-  - 500
-- User
-  - Login
-  - Register
-  - Register Result
-```
+### Populate DB
 
-## Usage
+- `psql -U postgres -d tracker -a -f api/sql/tracker_public_country.sql -h localhost`
+-  `psql -U postgres -d tracker -a -f api/sql/tracker_public_user.sql -h localhost`
+- `psql -U postgres -d tracker -a -f api/sql/tracker_public_userXCountry.sql -h localhost`
+- `psql -U postgres -d tracker -a -f api/sql/tracker_public_content.sql -h localhost`
 
-```bash
-$ git clone https://github.com/ant-design/ant-design-pro.git --depth=1
-$ cd ant-design-pro
-$ npm install
-$ npm start         # visit http://localhost:8000
-```
 
-Or you can use the command tool: [ant-design-pro-cli](https://github.com/ant-design/ant-design-pro-cli)
+### edit database
 
-```bash
-$ npm install ant-design-pro-cli -g
-$ mkdir pro-demo && cd pro-demo
-$ pro new
-```
+psql -U postgres -d tracker -h localhost
 
-More instructions at [documentation](http://pro.ant.design/docs/getting-started).
+SELECT * from cards 
+````start.sh````
 
-## Compatibility
+### tmux help
 
-Modern browsers and IE11.
+To use tmux, start it using start.sh
 
-## Contributing
+ - control b and then arrow keys to swap panes
+ - control b and press d to get out of tmux panes (it is all still running)
+ - tmux kill-server will stop all processes in all panes
+ 
 
-Any type of contribution is welcome, here are some examples of how you may contribute to this project:
 
-- Use Ant Design Pro in your daily work.
-- Submit [issues](http://github.com/ant-design/ant-design-pro/issues) to report bugs or ask questions.
-- Propose [pull requests](http://github.com/ant-design/ant-design-pro/pulls) to improve our code.
+
+
+
+
