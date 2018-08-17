@@ -63,7 +63,6 @@ class MapBackground extends Component {
                 navCoords: [card.marker[1], card.marker[2], 128.5],
                 heightMode: 'float',
                 rotation: [0,0,0],
-                scale: [5,5,5],
                 ambientLight: [0,0,0]
               });
             }

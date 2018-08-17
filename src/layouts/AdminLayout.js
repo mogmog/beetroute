@@ -147,7 +147,7 @@ export default class Admin extends Component {
 
     if (!coords) {
 
-      alert("Addcard - no coords");
+      alert("Error - no coords");
 
     } else {
 
@@ -167,9 +167,11 @@ export default class Admin extends Component {
       dispatch({
         type: 'card/createquestioncard',
         payload: {component, marker: camera, camera : camera, cameraOptions : defaultCameraOptions },
-      }).then(()=> {
-        this.setState({selectedIndex : this.state.selectedIndex + 1});
+      }).then((e) => {
+
+        this.setState({selectedIndex : this.props.card.questioncards.length -1 });
       })
+
 
     }
   }
