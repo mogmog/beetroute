@@ -59,6 +59,7 @@ git clone https://github.com/mogmog/beetroute.git
        export DATABASE_URL="postgresql://postgres:postgresGeorgianSoupe45435@localhost/beatroute"
          
  
+    if this causes problems run rm -rf migrations
     ```
     (env)$ python manage.py db init
 

@@ -155,7 +155,7 @@ class BasicLayout extends React.PureComponent {
     const bashRedirect = this.getBaseRedirect();
 
     return (
-      <DocumentTitle title={'Beetroute'}>
+      <DocumentTitle title={'Beatroute'}>
 
         <Switch>
 

@@ -216,7 +216,7 @@ export default class Admin extends Component {
           }
 
 
-          that.addCard("TextCard", {longitude: longitude, latitude: latitude});
+          that.addCard(that.state.instagrammodal ? "InstagramCard" : "TextCard", {longitude: longitude, latitude: latitude});
 
 
         } else {
