@@ -130,6 +130,12 @@ def create_app(config_name):
       card = Card.get_all().filter(Card.id.in_([jsoncard["id"]])).one()
 
       card.data = jsoncard["data"]
+      card.camera = jsoncard["camera"]
+      card.marker = jsoncard["marker"]
+      card.markerOffset = jsoncard["markerOffset"]
+      card.cameraOptions = jsoncard["cameraOptions"]
+      card.component = jsoncard["component"]
+
       if jsoncamera is not None: card.camera = jsoncamera
       if jsoninstagram is not None: card.instagram = jsoninstagram
 
@@ -230,7 +236,7 @@ def create_app(config_name):
       camera = request.data.get('camera')
       cameraOptions = request.data.get('cameraOptions')
 
-      Card(component, {}, {}, marker, camera, cameraOptions, {} ).save()
+      Card(component, {}, {}, marker, 0, camera, cameraOptions, {} ).save()
 
       cards = Card.get_all().filter(or_(Card.component == 'TextCard', Card.component == 'InstagramCard')).order_by(Card.id).all()
 

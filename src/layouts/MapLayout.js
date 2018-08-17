@@ -19,6 +19,7 @@ import styles from './MapLayout.less';
 import {EXIF} from 'exif-js';
 import ImageUploader from 'react-images-upload';
 import InstagramChooser from "../components/Instagram/InstagramChooser";
+import CardJSONEditor from "../components/CardJSONEditor/CardJSONEditor";
 
 const Item = Popover.Item;
 
@@ -38,16 +39,18 @@ export default class Admin extends Component {
 
   dropCount = 0;
 
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
+      position : undefined,
       imgHeight: 410,
       hasOpenCard: false,
-      cardsUp: true,
-      selectedIndex: parseInt(localStorage.getItem("selectedIndex")) || 0,
+      cardsUp: false,
+      selectedIndex: 1,
       geohackmodal: false,
       instagrammodal: false,
+      jsonmodal : false,
       cardtype: '',
     };
   }
@@ -58,6 +61,8 @@ export default class Admin extends Component {
     dispatch({
       type: 'card/fetchquestioncards',
       payload: {userId: 1, type: 'daycard'},
+    }).then((e) => {
+      this.setState({selectedIndex : parseInt(localStorage.getItem('selectedIndex') || 0)})
     });
 
     dispatch({
@@ -69,13 +74,6 @@ export default class Admin extends Component {
       type: 'instagram/fetch',
       payload: {},
     });
-
-    setTimeout(() => {
-      this.setState({
-        data: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI'],
-      });
-    }, 100);
-
   }
 
   onCameraChange(position) {
@@ -112,18 +110,11 @@ export default class Admin extends Component {
       const previouscamera = this.props.card.questioncards[this.state.selectedIndex].camera;
 
       const newcamera = this.state.position;
-      //newcamera[1] = previouscamera[1];
-      //newcamera[2] = previouscamera[2];
 
       dispatch({
         type: 'card/updatequestioncard',
         payload: {"card": this.props.card.questioncards[this.state.selectedIndex], camera: newcamera},
-      }).then((e) => {
-
-        if (false && this.state.selectedIndex < this.props.card.questioncards.length - 1) {
-          this.setState({selectedIndex: this.state.selectedIndex + 1});
-        }
-      })
+      });
     }
   }
 
@@ -228,20 +219,6 @@ export default class Admin extends Component {
   }
 
 
-  componentDidUpdate() {
-
-    //this is a buggy way to fix the fact that the first card is not setting the position
-    /*  if (this.props.card.questioncards.length && this.state.selectedIndex === 0 && !this.state.position) {
-        this.setState({position : this.props.card.questioncards[0].camera });
-      }*/
-
-    //console.log("componentDidUpdate");
-    if (this.state.selectedIndex !== this.props.card.questioncards.length - 1) {
-      /* eslint react/no-did-update-set-state: 0 */
-      //this.setState({ selectedIndex: this.props.card.questioncards.length - 1 });
-    }
-
-  }
 
   swipedDown() {
     this.setState({cardsUp: false});
@@ -253,6 +230,21 @@ export default class Admin extends Component {
 
   setCardType(type) {
     this.setState({cardtype: type});
+  }
+
+  saveJSON(card) {
+
+    const {dispatch} = this.props;
+
+    dispatch({
+      type: 'card/updatequestioncard',
+      payload: {"card": card},
+    })
+
+    this.setState({jsonmodal: false});
+    const oldSelectedIndex = this.state.selectedIndex;
+
+
   }
 
   render() {
@@ -278,6 +270,11 @@ export default class Admin extends Component {
       <InstagramChooser onSelect={this.onInstagramSelect.bind(this)} data={instagram.instagram.data}></InstagramChooser>
     </Modal>
 
+    const jsonmodal = (
+      <Modal visible={this.state.jsonmodal}>
+                        <CardJSONEditor saveJSON={this.saveJSON.bind(this)} card={card.questioncards[this.state.selectedIndex]} />
+                      </Modal>
+    );
 
     const extra = (
 
@@ -293,23 +290,14 @@ export default class Admin extends Component {
     return (
       <div className={styles.top}>
 
-
-
-        {/*      add this back when camera needs to update cards (if that is a good pattern)  {onCameraChange={this.onCameraChange.bind(this)}}*/}
-
-        {/*TODO friday - make the whole carasol swipable down to expose the map. maybe auto rotate*/}
-
-
-         <MapBackground onCameraChange={this.onCameraChange.bind(this)} position={position}
+         <MapBackground onCameraChange={this.onCameraChange.bind(this)} position={position} cardsUp={cardsUp}
                        slideIndex={this.state.selectedIndex} cards={card.questioncards} waypoints={waypoints}>
 
 
            {isAdmin && <NavBar
               style={{backgroundColor: 'rgba(255,255,255,0.7)', position : 'absolute', top : '0px', width : '100vw'}}
               mode="light"
-              leftContent={
-                <Button style={{padding : 0}} type={'primary'} onClick={this.save.bind(this)}> Save </Button>
-              }
+              leftContent={ [<Button type={'primary'} key={'save'} onClick={this.save.bind(this)}> Save </Button>, <Button type={'secondary'} key={'jsonedit'} onClick={(e) => this.setState({jsonmodal : true})}> JSON </Button> ] }
               rightContent={
                 <GeoLocate setCardType={this.setCardType.bind(this)} showModal={this.showModal.bind(this)} addCard={this.addCard.bind(this)}/>
               }
@@ -361,6 +349,8 @@ export default class Admin extends Component {
           {geohackmodal}
 
           {instagrammodal}
+
+          {jsonmodal}
 
         </MapBackground>
 

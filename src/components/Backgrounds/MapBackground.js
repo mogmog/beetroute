@@ -14,6 +14,7 @@ class MapBackground extends Component {
 
     this.browser = window.vts.browser(this.map, {
       map: 'https://cdn.melown.com/mario/store/melown2015/map-config/melown/VTS-Tutorial-map/mapConfig.json',
+      position : ["obj", -0.0588082, 51.5675886, "float", 0, 10, -90, 0, 27308, 55]
     });
 
     const that = this;
@@ -25,8 +26,9 @@ class MapBackground extends Component {
       const map = that.browser.map;
       const renderer = that.browser.renderer;
 
-      // that.browser.mapMobileModeAutodect = false;
+      that.browser.mapMobileModeAutodect = false;
       that.browser.mapMobileMode = false;
+      that.browser.mapAllowLowres = false;
       /*that.browser.mapMobileTexelDegradation = 150;
       that.browser.rendererAntialiasing = false;
       that.browser.mapDownloadThreads = 3;
@@ -45,30 +47,34 @@ class MapBackground extends Component {
         let done = false;
         const smaller = that.props.waypoints;
 
-
         that.props.cards.forEach((card, index) => {
 
           if (pinModelSelected && pinModelSelected.ready && pinModelUnSelected && pinModelUnSelected.ready) {
 
-            if (index === that.props.slideIndex) {
-              pinModelSelected.draw({
-                navCoords: [card.marker[1], card.marker[2], 128.5],
-                heightMode: 'float',
-                rotation: [0,0,0],
-                scale: [5,5,5],
-                ambientLight: [0,0,0]
-              });
-            } else {
-              pinModelUnSelected.draw({
-                navCoords: [card.marker[1], card.marker[2], 128.5],
-                heightMode: 'float',
-                rotation: [0,0,0],
-                ambientLight: [0,0,0]
-              });
+            if (index > 0) {
+
+              const markerHeight = that.browser.map.getSurfaceHeight([card.marker[1], card.marker[2]])[0] + card.markerOffset;
+
+              if (index === that.props.slideIndex) {
+                pinModelSelected.draw({
+                  navCoords: [card.marker[1], card.marker[2], markerHeight],
+                  heightMode: 'float',
+                  rotation: [0,0,0],
+                  scale: [20,20,20],
+                  ambientLight: [0,0,0]
+                });
+              } else {
+                pinModelUnSelected.draw({
+                  navCoords: [card.marker[1], card.marker[2], markerHeight],
+                  heightMode: 'float',
+                  rotation: [0,0,0],
+                  scale: [20,20,20],
+                  ambientLight: [0,0,0]
+                });
+              }
+
             }
-
           }
-
         });
 
         // if (pinModelSelected && pinModelSelected.ready) {
@@ -121,17 +127,49 @@ class MapBackground extends Component {
 
   componentDidUpdate(prevProps) {
 
-    if (this.props.cards.length && this.props.cards[this.props.slideIndex] && this.props.cards[this.props.slideIndex].camera) {
 
-      //TODO next line is causing the bug where the first slide wont update
-      if (prevProps.slideIndex ===0 ) {
-        this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
-      } else if (this.props.slideIndex !== prevProps.slideIndex) {
-        this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
+if (this.props.cards[this.props.slideIndex] !== undefined) {
 
-        if (this.props.cards[this.props.slideIndex].cameraOptions.rotate) this.browser.autopilot.setAutorotate(-4);
-      }
-    }
+  /*/!*If card is moving up, move map north*!/
+  if (!prevProps.cardsUp && this.props.cardsUp) {
+
+    const atZero = (this.browser.map.getHitCoords(0, 0, 'fix'));
+    const atOneHundred = (this.browser.map.getHitCoords(0, 200, 'fix'));
+
+    const adjustedCamera = this.props.cards[this.props.slideIndex].camera;
+
+    adjustedCamera[2] = adjustedCamera[2] - (atZero[1] - atOneHundred[1]);
+
+    this.browser.autopilot.flyTrajectory([this.props.cards[this.props.slideIndex].camera, adjustedCamera], {maxDuration : 4500});
+  }
+
+  /!*If card is moving down, move map south*!/
+  if (prevProps.cardsUp && !this.props.cardsUp) {
+    const atZero = (this.browser.map.getHitCoords(0, 0, 'fix'));
+    const atOneHundred = (this.browser.map.getHitCoords(0, 200, 'fix'));
+
+    const adjustedCamera = this.props.cards[this.props.slideIndex].camera;
+
+    adjustedCamera[2] = adjustedCamera[2] + (atZero[1] - atOneHundred[1]);
+
+    this.browser.autopilot.flyTrajectory([this.props.cards[this.props.slideIndex].camera, adjustedCamera], {maxDuration : 4500});
+  }*/
+
+
+  //TODO next line is causing the bug where the first slide wont update
+ // if (this.props.slideIndex !== prevProps.slideIndex) {
+    this.browser.autopilot.flyTo(this.props.cards[this.props.slideIndex].camera, this.props.cards[this.props.slideIndex].cameraOptions);
+
+    if (this.props.cards[this.props.slideIndex].cameraOptions.rotate) this.browser.autopilot.setAutorotate(-4);
+ // } else {
+
+
+  //}
+
+}
+
+
+
 
 
 
