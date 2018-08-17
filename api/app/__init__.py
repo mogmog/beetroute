@@ -1,7 +1,6 @@
 # app/__init__.py
 import json
 from datetime import datetime
-import jsonschema
 import random
 from flask_api import FlaskAPI, status
 from flask_sqlalchemy import SQLAlchemy
