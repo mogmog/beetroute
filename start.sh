@@ -20,6 +20,6 @@ tmux send-keys -t beatroute:beatrouteWindow.2 'export APP_SETTINGS="development"
 tmux send-keys -t beatroute:beatrouteWindow.2 'export DATABASE_URL="postgresql://postgres:postgresGeorgianSoupe45435@localhost/beatroute"' C-j
 tmux send-keys -t beatroute:beatrouteWindow.2 'python run.py' C-j
 
-# finally attach to the session.
+# finally attach to the session..
 tmux attach -t beatroute
 
