@@ -132,7 +132,7 @@ def create_app(config_name):
       card.data = jsoncard["data"]
       card.camera = jsoncard["camera"]
       card.marker = jsoncard["marker"]
-      card.markerOffset = jsoncard["markerOffset"]
+      card.markerOptions = jsoncard["markerOptions"]
       card.cameraOptions = jsoncard["cameraOptions"]
       card.component = jsoncard["component"]
 
@@ -233,10 +233,11 @@ def create_app(config_name):
 
       component = request.data.get('component')
       marker = request.data.get('marker')
+      markerOptions = request.data.get('markerOptions')
       camera = request.data.get('camera')
       cameraOptions = request.data.get('cameraOptions')
 
-      Card(component, {}, {}, marker, 0, camera, cameraOptions, {} ).save()
+      Card(component, {}, {}, marker, markerOptions, camera, cameraOptions, {} ).save()
 
       cards = Card.get_all().filter(or_(Card.component == 'TextCard', Card.component == 'InstagramCard')).order_by(Card.id).all()
 

@@ -162,7 +162,7 @@ export default class Admin extends Component {
 
       dispatch({
         type: 'card/createquestioncard',
-        payload: {component, marker: camera, camera: camera, cameraOptions: defaultCameraOptions},
+        payload: {component, marker: camera, markerOptions:{heightOffset : 0, rotation: [0, 0, 0], scale : [4,4,4]}, camera: camera, cameraOptions: defaultCameraOptions},
       }).then((e) => {
 
         this.setState({selectedIndex: this.props.card.questioncards.length - 1});

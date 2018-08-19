@@ -53,22 +53,24 @@ class MapBackground extends Component {
 
             if (index > 0) {
 
-              const markerHeight = that.browser.map.getSurfaceHeight([card.marker[1], card.marker[2]])[0] + card.markerOffset;
+
+
+              const markerHeight = that.browser.map.getSurfaceHeight([card.marker[1], card.marker[2]])[0] + card.markerOptions.heightOffset;
 
               if (index === that.props.slideIndex) {
                 pinModelSelected.draw({
                   navCoords: [card.marker[1], card.marker[2], markerHeight],
                   heightMode: 'float',
-                  rotation: [0,0,0],
-                  scale: [20,20,20],
+                  scale: card.markerOptions.rotation,
+                  scale: card.markerOptions.scale,
                   ambientLight: [0,0,0]
                 });
               } else {
                 pinModelUnSelected.draw({
                   navCoords: [card.marker[1], card.marker[2], markerHeight],
                   heightMode: 'float',
-                  rotation: [0,0,0],
-                  scale: [20,20,20],
+                  rotation: card.markerOptions.rotation,
+                  scale: card.markerOptions.scale,
                   ambientLight: [0,0,0]
                 });
               }

@@ -15,18 +15,18 @@ class Card(db.Model):
     key = db.Column(JSONB(astext_type=Text()))
     data = db.Column(db.JSON)
     marker = db.Column(db.JSON)
-    markerOffset = db.Column(db.Integer)
+    markerOptions = db.Column(db.JSON)
 
     camera = db.Column(db.JSON)
     cameraOptions = db.Column(db.JSON)
     instagram = db.Column(db.JSON)
 
-    def __init__(self, component, key, data, marker, markerOffset, camera, cameraOptions, instagram):
+    def __init__(self, component, key, data, marker, markerOptions, camera, cameraOptions, instagram):
         self.component = component
         self.key = key
         self.data = data
         self.marker = marker
-        self.markerOffset = markerOffset
+        self.markerOptions = markerOptions
         self.camera = camera
         self.cameraOptions = cameraOptions
         self.instagram = None
@@ -59,7 +59,7 @@ class Card(db.Model):
                    'key' : self.key,
                    'data' : self.data,
                    'marker' : self.marker,
-                   'markerOffset' : self.markerOffset,
+                   'markerOptions' : self.markerOptions,
                    'camera' : self.camera,
                    'cameraOptions' : self.cameraOptions,
                    'instagram' : self.instagram
